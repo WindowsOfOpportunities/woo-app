@@ -1,9 +1,10 @@
-import { Outlet, RouterProvider } from "react-router";
+import { RouterProvider } from "react-router";
 import LoginPage from "../modules/login";
 import { createBrowserRouter } from "react-router";
 import DashBoard from "../modules/dashboard";
 import AddWindowForm from "../modules/dashboard/find-window";
 import PannelWrapper from "../components/layout/sidebar";
+import FindWindow from "../modules/dashboard/add-window";
 
 const NotFoundException = () => {
     return null;
@@ -26,7 +27,7 @@ const memoryRouter = createBrowserRouter(
                 },
                 {
                     path: '/dashboard/find-window',
-                    element: <>find</>,
+                    element: <FindWindow />,
                 },
                 {
                     path: '/dashboard/add-window',

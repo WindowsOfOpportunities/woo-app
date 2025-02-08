@@ -1,16 +1,9 @@
-import { Form, Input, InputNumber, Upload, Button, Flex, Row, Col } from "antd";
+import { Form, Input, InputNumber, Upload, Button, Row, Col } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router";
 import axios from "axios";
 
 const AddWindowForm = () => {
     const [form] = Form.useForm();
-
-    const navigate = useNavigate();
-
-    const onFinish = (values: any) => {
-        console.log("Form Submitted:", values);
-    };
 
     const submitData = async () => {
         const jsonData = {
@@ -80,9 +73,6 @@ const AddWindowForm = () => {
         }
 
     }
-
-
-
 
 
     return (

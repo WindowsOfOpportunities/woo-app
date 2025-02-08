@@ -2,7 +2,7 @@
 import { Flex, Layout, Typography } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
-import WindowIcon from '../../../assets/images/window.svg'
+import WindowIconAdd from '../../../assets/images/window-add.svg'
 import WindowIconSearch from '../../../assets/images/window-search.svg'
 
 const MainContent = () => {
@@ -50,7 +50,7 @@ const MainContent = () => {
                         <Flex vertical align="center">
                             <img style={{
                                 width: 150
-                            }} src={WindowIcon} alt="window search" />
+                            }} src={WindowIconAdd} alt="window search" />
                             <Typography.Title level={2}>Add Windows</Typography.Title>
                         </Flex>
                     </div>
