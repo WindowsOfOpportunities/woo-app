@@ -1,5 +1,5 @@
 import { color } from "bun";
-import { pgTable, text, integer, real, date, bigserial, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, real, date, uuid } from "drizzle-orm/pg-core";
 
 export const project = pgTable('project', {
   uuid: uuid('project_id').primaryKey(),
