@@ -11,43 +11,39 @@ const postWindowBodySchema = t.Object({
     city: t.String(),
     country: t.String(),
     // Window details
-    windows: t.Object({
-        count: t.Integer(),
-        height: t.Number(),
-        width: t.Number(),
-        yearFrom: t.Integer(),
-        yearTo: t.Integer(),
-        glassPane: t.Integer(),
-        coating: t.Integer(),
-        uValue: t.Number(),
-        airResistance: t.String(),
-        windResistance: t.String(),
-        soundResistance: t.String(),
-        fireproof: t.String(),
-        dismantleDate: t.Optional(t.Date()),
-        image: t.File(),
-        gasFilling1: t.String(),
-        gasFilling2: t.String(),
-        gValue: t.Number(),
-        materialFrame: t.String(),
-        lightTransmittance: t.Number(),
-        security: t.String(),
-        spacerMaterial: t.String(),
-        soundProofingDb: t.Number(),
-        thicknessGlassMm1: t.Number(),
-        thicknessGlassMm2: t.Number(),
-        thicknessGlassMm3: t.Number(),
-        color: t.String(),
-    }),
+    count: t.String(),
+    height: t.String(),
+    width: t.String(),
+    yearFrom: t.String(),
+    yearTo: t.String(),
+    glassPane: t.String(),
+    coating: t.String(),
+    uValue: t.String(),
+    airResistance: t.String(),
+    windResistance: t.String(),
+    soundResistance: t.String(),
+    fireproof: t.String(),
+    dismantleDate: t.String(),
+    image: t.File(),
+    gasFilling1: t.String(),
+    gasFilling2: t.String(),
+    gValue: t.String(),
+    materialFrame: t.String(),
+    lightTransmittance: t.String(),
+    security: t.String(),
+    spacerMaterial: t.String(),
+    soundProofingDb: t.String(),
+    thicknessGlassMm1: t.String(),
+    thicknessGlassMm2: t.String(),
+    thicknessGlassMm3: t.String(),
+    color: t.String(),
 });
 export type PostWindowBodySchemaType = Static<typeof postWindowBodySchema>;
 
 export const windowController = new Elysia().post(
     '/window',
-
     async ({ params, body, set }) => {
-        console.log(body);
-        // const insertResult = await windowModel.insertWindow(body);
+        const insertResult = await windowModel.insertWindow(body);
 
         set.status = 200;
         return {
@@ -55,7 +51,7 @@ export const windowController = new Elysia().post(
         };
     },
     {
-        // body: postWindowBodySchema,
-        parse: "formdata"
+        body: postWindowBodySchema,
+        parse: 'formdata',
     }
 );
