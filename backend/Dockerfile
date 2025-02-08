@@ -9,4 +9,3 @@ COPY . .
 ENV NODE_ENV production
 
 RUN bun run build
-RUN bun run start
