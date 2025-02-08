@@ -1,6 +1,7 @@
 import { PostWindowBodySchemaType } from '../controllers/window.controllers';
 import { db } from '../db/db';
 import { project, windowItem } from '../db/migration';
+import { WindowOpportunitiesCalculator } from '../helpers/rating-algorithm';
 import { getImageFromS3, uploadImageToS3 } from '../storage/s3storage';
 
 export const windowModel = {
@@ -56,10 +57,26 @@ export const windowModel = {
     },
     getWindows: async () => {
         const windows = await db.select().from(windowItem);
-        return windows;
+
+        return windows.map((window) => {
+            const calc = new WindowOpportunitiesCalculator();
+            let rating;
+            try {
+                rating = calc.calculate({
+                    coatingNumber: window.coating,
+                    glassPanelNumber: window.glassPane,
+                    year: window.windowYearFrom,
+                    uValue: window.uValue!,
+                });
+            } catch (error) {
+                rating = undefined;
+            }
+
+            return { ...window, windowRating: rating };
+        });
     },
-    getWindowImage: async (imageId:string) => {
+    getWindowImage: async (imageId: string) => {
         const image = await getImageFromS3(imageId);
-        return image
-    }
+        return image;
+    },
 };
