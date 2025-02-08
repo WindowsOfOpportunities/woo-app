@@ -2,9 +2,9 @@ import { RouterProvider } from "react-router";
 import LoginPage from "../modules/login";
 import { createBrowserRouter } from "react-router";
 import DashBoard from "../modules/dashboard";
-import AddWindowForm from "../modules/dashboard/find-window";
+import AddWindowForm from "../modules/dashboard/add-window";
 import PannelWrapper from "../components/layout/sidebar";
-import FindWindow from "../modules/dashboard/add-window";
+import FindWindow from "../modules/dashboard/find-window";
 
 const NotFoundException = () => {
     return null;

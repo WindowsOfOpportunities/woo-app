@@ -1,8 +1,7 @@
 import { notification } from 'antd';
 import axios, { AxiosInstance, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 
-const baseServerUrl = '';
-
+const baseServerUrl = 'http://localhost:3009/api/v1';
 
 // Reusable Axios Configuration
 const createAxiosInstance = (baseURL: string): AxiosInstance => {
@@ -17,7 +16,7 @@ const createAxiosInstance = (baseURL: string): AxiosInstance => {
 };
 
 // Axios instance to connect to ATOM BACK END
-export const axiosInstanceAtom = createAxiosInstance(baseServerUrl);
+export const axiosInstance = createAxiosInstance(baseServerUrl);
 
 
 function requestInterceptor(axiosInstance: AxiosInstance, accessToken: string) {
@@ -66,7 +65,6 @@ function responseInterceptor(axiosInstance: AxiosInstance) {
 }
 
 export const axiosInterceptor = (accessToken: string) => {
-    // ATOM connection interceptor
-    requestInterceptor(axiosInstanceAtom, accessToken);
-    responseInterceptor(axiosInstanceAtom);
+    requestInterceptor(axiosInstance, accessToken);
+    responseInterceptor(axiosInstance);
 };

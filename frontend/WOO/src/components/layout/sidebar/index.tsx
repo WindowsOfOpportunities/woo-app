@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { UserOutlined, LogoutOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import Logo from "../../../assets/images/logo.png";
 
-const { Header, Content } = Layout;
+const { Header } = Layout;
 const { Text } = Typography;
 
 const PannelWrapper = () => {
