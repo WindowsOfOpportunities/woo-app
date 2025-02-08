@@ -30,9 +30,9 @@ function App() {
         }}>
           <div className="login-card" >
             <Typography.Title level={3}>Windows of Opportunities</Typography.Title>
-            <Typography.Title level={2}>Connecting People, Unlocking Sustainability</Typography.Title>
+            <Typography.Title level={5}>Connecting People, Unlocking Sustainability</Typography.Title>
             <Typography.Paragraph>Welcome to Windows of Opportunities – a seamless platform designed to connect those looking for reused windows with those offering them. Whether you're an individual or a large provider, you can effortlessly list available windows, making it easy for others to find and repurpose them. By giving windows a second life, we reduce waste, support sustainable construction, and create a circular economy for building materials. Start browsing or listing today and be part of the change!</Typography.Paragraph>
-            <Typography.Title level={2}>Find. Connect. Reuse.</Typography.Title>
+            <Typography.Title level={5}>Find. Connect. Reuse.</Typography.Title>
             <Form
               name="basic"
               layout={'vertical'}
