@@ -44,6 +44,8 @@ export const windowItem = pgTable('windowItem', {
   color: text('color'),
   fireproof: text('fireproof'),
   loadN: real('load_n'),
+  // lat: real("lat"),
+  // lon: 
 });
 
 export type WindowItem = typeof windowItem.$inferSelect;
