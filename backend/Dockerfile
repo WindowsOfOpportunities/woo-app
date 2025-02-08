@@ -8,4 +8,5 @@ COPY . .
 
 ENV NODE_ENV production
 
-CMD [ "bun", "run", "build", "&&", "bun", "start" ]
+RUN bun run build
+RUN bun run start
