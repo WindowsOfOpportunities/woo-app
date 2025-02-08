@@ -5,33 +5,40 @@ import { createWindow } from "../../../utils/api/api-functions";
 const AddWindowForm = () => {
     const [form] = Form.useForm();
 
+    const [api, contextHolder] = notification.useNotification();
     const submitData = async (data: any) => {
+
+        notification.open({
+            message: "Upload Successful",
+            description: "Your window data has been uploaded successfully.",
+        });
+
         const jsonData = data
         // Convert JSON to FormData
         const formData = new FormData();
 
         // Flatten & Append data
-        Object.entries(jsonData).forEach(([key, value]) => {
-            formData.append(key, value as any);
+        Object.entries(jsonData).forEach(([key, value]: any) => {
+            if (key === "image" && value?.file as any) {
+                formData.append("image", value?.file as any);
+            } else {
+                formData.append(key, value as any);
+            }
         });
 
-        // Simulate file upload (replace this with actual File object)
-        const file = new File([""], "window_image.jpg", { type: "image/jpeg" });
-        formData.set("image", file); // Replace filename with actual file input
-
         try {
-            const response = await createWindow(formData);
+
+            const response = await createWindow(formData)
             // Show success notification
-            notification.success({
+            api.success({
                 message: "Upload Successful",
                 description: "Your window data has been uploaded successfully.",
-                placement: "topRight",
-                duration: 3, // Duration for the notification to stay on screen
             });
+
             console.log("Upload successful:", response.data);
         } catch (error) {
             console.error("Upload failed:", error);
-            notification.error({
+            api.error({
                 message: "Upload Failed",
                 description: "There was an issue with uploading the data. Please try again.",
                 placement: "topRight",
@@ -42,7 +49,9 @@ const AddWindowForm = () => {
 
     return (
         <div className="scrollable-container">
+            {contextHolder}
             <Flex justify="center">
+
                 <Form
                     form={form}
                     layout="vertical"
@@ -229,6 +238,11 @@ const AddWindowForm = () => {
                         </Col>
                         <Col span={8}>
                             <Form.Item label="Security" name="security">
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item label="G Value" name="gValue">
                                 <Input />
                             </Form.Item>
                         </Col>

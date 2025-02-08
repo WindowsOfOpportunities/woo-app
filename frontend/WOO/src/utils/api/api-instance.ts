@@ -32,7 +32,6 @@ function responseInterceptor(axiosInstance: AxiosInstance) {
         (error) => {
             // Error
             const {
-                config,
                 response: { status },
             } = error;
             if (status === 401) {
