@@ -13,3 +13,20 @@ body {
   padding: 20px;
   width: 600px;
 }
+
+.scrollable-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  /* Default to auto, can be changed to 'scroll' if needed */
+  padding-right: 20px;
+  /* Adjust according to your theme's spacing */
+  padding-left: 16px;
+  /* Adjust according to your theme's spacing */
+  padding-top: 16px;
+  /* Adjust according to your theme's spacing */
+  padding-bottom: 16px;
+  /* Adjust according to your theme's spacing */
+  min-height: 0;
+  height: 1px;
+
+}

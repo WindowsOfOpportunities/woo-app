@@ -23,7 +23,6 @@ const memoryRouter = createBrowserRouter(
                 {
                     index: true,
                     element: <DashBoard />,
-
                 },
                 {
                     path: '/dashboard/find-window',
