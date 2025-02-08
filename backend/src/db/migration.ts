@@ -12,7 +12,7 @@ export const project = pgTable('project', {
 });
 
 export const windowItem = pgTable('windowItem', {
-  windowItemId: integer('window_item_id').primaryKey(),
+  windowItemId: uuid('window_item_id').primaryKey(),
   projectId: uuid('project_id')
     .notNull()
     .references(() => project.uuid, { onDelete: 'cascade' }),
