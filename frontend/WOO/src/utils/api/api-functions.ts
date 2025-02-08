@@ -8,14 +8,18 @@ export const getWindowsList = async (): Promise<any> => {
         throw error;
     }
 };
-export const getImageByWindowId = async (imageUrl: string): Promise<any> => {
+export const getImageByWindowId = async (imageUrl: string): Promise<Blob> => {
     try {
-        const response = await axiosInstance.get(`/external/window-image/${imageUrl}`);
-        return response.data
+        const response = await axiosInstance.get(`/external/window-image/${imageUrl}`, {
+            responseType: "blob", // Ensure the response is treated as a Blob
+        });
+        return response.data; // Return the Blob
     } catch (error) {
+        console.error("Error fetching image:", error);
         throw error;
     }
 };
+
 export const getVersion = async (): Promise<any> => {
     try {
         const response = await axiosInstance.get(`/core/version`);

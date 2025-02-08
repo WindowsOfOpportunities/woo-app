@@ -165,7 +165,7 @@ const AddWindowForm = () => {
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label="Glass Pane" name="glassPane">
+                            <Form.Item label="Glass Panel" name="glassPane">
                                 <InputNumber min={0} style={{ width: "100%" }} />
                             </Form.Item>
                         </Col>
