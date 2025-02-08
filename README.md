@@ -15,7 +15,9 @@ The front-end is written in TypeScript, using a combination of React with the  [
 The website can be found at [TODO]()
 
 ```
-// TODO
+npm run dev
+// or
+npm run build
 ```
 
 ## Back-end
@@ -26,7 +28,10 @@ The backend uses [Bun](https://bun.sh/), JavaScript runtime, package manager, te
 
 ```
 bun i
+
 bun dev
+\\ or
+bun build
 ```
 
 ### Deployment
