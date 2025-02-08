@@ -1,14 +1,14 @@
-import { Button, Checkbox, Col, Flex, Form, Input, Typography } from "antd"
-import Pic from "../src/assets/images/01.jpg"
+import { Button, Col, Flex, Form, Input, Typography } from "antd"
+import Pic from "../../assets/images/01.jpg"
+import Logo from "../../assets/images/logo.png"
+import { useNavigate } from "react-router"
 
-function App() {
+const LoginPage = () => {
 
+  const navigate = useNavigate();
 
   const onFinish = () => {
-
-  }
-  const onFinishFailed = () => {
-
+    navigate('/dashboard')
   }
 
   return (
@@ -29,31 +29,34 @@ function App() {
           height: '100vh'
         }}>
           <Flex className="login-card" vertical align="center" >
+            <img src={Logo} alt="Logo" style={{
+              width: 150
+            }} />
             <Typography.Title level={3}>Windows of Opportunities</Typography.Title>
             <Typography.Title level={4}>Connecting People, Unlocking Sustainability</Typography.Title>
-            <Typography.Paragraph>Welcome to Windows of Opportunities – a seamless platform designed to connect those looking for reused windows with those offering them. Whether you're an individual or a large provider, you can effortlessly list available windows, making it easy for others to find and repurpose them. By giving windows a second life, we reduce waste, support sustainable construction, and create a circular economy for building materials. Start browsing or listing today and be part of the change!</Typography.Paragraph>
-            <Typography.Title level={4} style={{
-              textAlign:'center'
-            }}>Find. Connect. Reuse.</Typography.Title>
+            <Typography.Paragraph style={{
+              textAlign: 'center'
+            }}>Welcome to Windows of Opportunities – a seamless platform designed to connect those looking for reused windows with those offering them. Whether you're an individual or a large provider, you can effortlessly list available windows, making it easy for others to find and repurpose them. By giving windows a second life, we reduce waste, support sustainable construction, and create a circular economy for building materials. Start browsing or listing today and be part of the change!</Typography.Paragraph>
+            <Typography.Title level={4}>Find. Connect. Reuse.</Typography.Title>
             <Form
               name="basic"
               layout={'vertical'}
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
               autoComplete="off"
+              style={{
+                width: '350px'
+              }}
             >
               <Form.Item
                 label="Username"
                 name="username"
-                style={{
-                  display: '100%'
-                }}
                 rules={[{ required: true, message: 'Please input your username!' }]}
               >
                 <Input />
               </Form.Item>
 
               <Form.Item
+
                 label="Password"
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}
@@ -62,7 +65,7 @@ function App() {
               </Form.Item>
 
               <Form.Item label={null}>
-                <Button type="primary" htmlType="submit" style={{
+                <Button color="default" variant="solid" htmlType="submit" style={{
                   width: '100%'
                 }}  >
                   Submit
@@ -81,4 +84,4 @@ function App() {
   )
 }
 
-export default App
+export default LoginPage
