@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: bun
+    runtime: docker
+    repo: https://github.com/WindowsOfOpportunities/woo-app
+    plan: starter
+    autoDeploy: false

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Table, Typography, Input, Space, Modal } from "antd";
+import { Table, Typography, Input, Space, Modal, Tag } from "antd";
 import {
   getImageByWindowId,
   getWindowsList,
