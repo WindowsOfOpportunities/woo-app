@@ -4,7 +4,6 @@ import { createWindow } from "../../../utils/api/api-functions";
 
 const AddWindowForm = () => {
     const [form] = Form.useForm();
-
     const [api, contextHolder] = notification.useNotification();
     const submitData = async (data: any) => {
 
@@ -51,7 +50,6 @@ const AddWindowForm = () => {
         <div className="scrollable-container">
             {contextHolder}
             <Flex justify="center">
-
                 <Form
                     form={form}
                     layout="vertical"
@@ -284,7 +282,7 @@ const AddWindowForm = () => {
                         </Col>
                     </Row>
 
-                    <Form.Item label="Upload Image" name="image">
+                    <Form.Item label="Upload Image" name="image" rules={[{ required: true, message: "Required" }]}>
                         <Upload
                             beforeUpload={(file) => false} // Disable auto upload
                             accept="image/*"
