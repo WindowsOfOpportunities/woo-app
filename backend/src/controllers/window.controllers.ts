@@ -3,6 +3,7 @@ import Elysia, { t } from 'elysia';
 export const windowController = new Elysia().post(
     '/window',
     async ({ params, body }) => {
+        
         return '';
     },
     {
@@ -23,7 +24,7 @@ export const windowController = new Elysia().post(
                 glassPane: t.Integer(),
                 coating: t.Integer(),
                 uValue: t.Number(),
-                dismantleDate: t.Date(),
+                dismantleDate: t.Optional(t.Date()),
                 imageUrl: t.String(),
             }),
         }),
