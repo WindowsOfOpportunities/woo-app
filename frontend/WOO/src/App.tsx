@@ -18,7 +18,7 @@ function App() {
       <Col span={12}>
         <div style={{
           height: '100vh',
-          background: `url(${Pic}) center no-repeat contain`
+          background: `url(${Pic}) center no-repeat`
         }} >
 
         </div>
@@ -58,7 +58,9 @@ function App() {
               </Form.Item>
 
               <Form.Item label={null}>
-                <Button type="primary" htmlType="submit"  >
+                <Button type="primary" htmlType="submit" style={{
+                  width:'100%'
+                }}  >
                   Submit
                 </Button>
               </Form.Item>

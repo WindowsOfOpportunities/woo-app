@@ -9,10 +9,3 @@ body {
   background-color: #f5f5f5;
 }
 
-.login-card {
-  box-shadow: -2px 0px 36px -19px rgba(0,0,0,0.75);
-  -webkit-box-shadow: -2px 0px 36px -19px rgba(0,0,0,0.75);
-  -moz-box-shadow: -2px 0px 36px -19px rgba(0,0,0,0.75);
-  padding: 20px;
-  border-radius: 7px;
-}
