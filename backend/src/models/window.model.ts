@@ -1,9 +1,9 @@
 // import { db } from '../config/db';
 
-export const callbackModel = {
-    updateSuborder: async (suborderId: string, body: any) => {
+export const windowModel = {
+    insertWindow: async (body: any) => {
         // DB CAll
 
-        return 'test'; //db.query('SELECT * FROM users');
+        return true; //db.query('SELECT * FROM users');
     },
 };
