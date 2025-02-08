@@ -2,6 +2,7 @@ import cors from '@elysiajs/cors';
 import dayjs from 'dayjs';
 import { Elysia } from 'elysia';
 import { routesCore } from './routes';
+import { db } from './db/db';
 
 const port = process.env.PORT || 3009;
 
@@ -34,5 +35,6 @@ export const app = new Elysia({
     .use(routesCore);
 
 app.listen(port, () => {
+
     console.log(`Server is running on ${app.server?.hostname}:${app.server?.port}`);
 });

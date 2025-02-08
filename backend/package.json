@@ -14,7 +14,8 @@
     "drizzle-orm": "^0.39.2",
     "drizzle-typebox": "^0.3.0",
     "elysia": "latest",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "postgres": "^3.4.5"
   },
   "devDependencies": {
     "bun-types": "latest"
