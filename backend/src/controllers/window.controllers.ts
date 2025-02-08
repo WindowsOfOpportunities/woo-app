@@ -1,9 +1,15 @@
 import Elysia, { t } from 'elysia';
+import { windowModel } from '../models/window.model';
 
 export const windowController = new Elysia().post(
     '/window',
-    async ({ params, body }) => {
-        return '';
+    async ({ params, body, set }) => {
+        const insertResult = await windowModel.insertWindow({});
+
+        set.status = 200;
+        return {
+            message: 'Successfully added to DB',
+        };
     },
     {
         body: t.Object({
@@ -23,8 +29,8 @@ export const windowController = new Elysia().post(
                 glassPane: t.Integer(),
                 coating: t.Integer(),
                 uValue: t.Number(),
-                dismantleDate: t.Date(),
-                imageUrl: t.String(),
+                dismantleDate: t.Optional(t.Date()),
+                image: t.File(),
             }),
         }),
     }
