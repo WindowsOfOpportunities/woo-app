@@ -7,7 +7,7 @@ const port = process.env.PORT || 3009;
 
 export const app = new Elysia({
     serve: {
-        port: port,
+        port: Number(port),
         hostname: process.env.HOST || 'localhost',
         maxRequestBodySize: 1024 * 1024 * 256, // 256MB
     },
