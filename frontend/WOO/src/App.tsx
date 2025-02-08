@@ -28,11 +28,13 @@ function App() {
         <Flex vertical justify="center" align="center" style={{
           height: '100vh'
         }}>
-          <div className="login-card" >
+          <Flex className="login-card" vertical align="center" >
             <Typography.Title level={3}>Windows of Opportunities</Typography.Title>
-            <Typography.Title level={2}>Connecting People, Unlocking Sustainability</Typography.Title>
+            <Typography.Title level={4}>Connecting People, Unlocking Sustainability</Typography.Title>
             <Typography.Paragraph>Welcome to Windows of Opportunities – a seamless platform designed to connect those looking for reused windows with those offering them. Whether you're an individual or a large provider, you can effortlessly list available windows, making it easy for others to find and repurpose them. By giving windows a second life, we reduce waste, support sustainable construction, and create a circular economy for building materials. Start browsing or listing today and be part of the change!</Typography.Paragraph>
-            <Typography.Title level={2}>Find. Connect. Reuse.</Typography.Title>
+            <Typography.Title level={4} style={{
+              textAlign:'center'
+            }}>Find. Connect. Reuse.</Typography.Title>
             <Form
               name="basic"
               layout={'vertical'}
@@ -61,14 +63,14 @@ function App() {
 
               <Form.Item label={null}>
                 <Button type="primary" htmlType="submit" style={{
-                  width:'100%'
+                  width: '100%'
                 }}  >
                   Submit
                 </Button>
               </Form.Item>
             </Form>
 
-          </div>
+          </Flex>
 
         </Flex>
 
