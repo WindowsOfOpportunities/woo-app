@@ -1,11 +1,12 @@
-import { PostWindowBodySchemaType } from '../controllers/window.controllers';
+import { EnrichedWindowBody } from '../controllers/window.controllers';
 import { db } from '../db/db';
 import { project, windowItem } from '../db/migration';
 import { WindowOpportunitiesCalculator } from '../helpers/rating-algorithm';
 import { getImageFromS3, uploadImageToS3 } from '../storage/s3storage';
 
+
 export const windowModel = {
-    insertWindow: async (body: PostWindowBodySchemaType) => {
+    insertWindow: async (body: EnrichedWindowBody) => {
         const windowTransactionResult = await db.transaction(async (tx) => {
             const newProjectId = crypto.randomUUID();
             const insertProjectResult = await tx.insert(project).values({
@@ -18,8 +19,19 @@ export const windowModel = {
                 streetNumber: body.streetNumber,
             });
 
-            const imageId = crypto.randomUUID();
-            const uploadResult = await uploadImageToS3(body.image as any, imageId);
+            let imageId = null;
+            if (body.image && body.image !== 'undefined') {
+                try {
+                    imageId = crypto.randomUUID();
+                    const uploadResult = await uploadImageToS3(body.image as any, imageId);
+                    if (!uploadResult) {
+                        imageId = null;
+                    }
+                } catch (error) {
+                    console.error('Failed to upload image:', error);
+                    imageId = null;
+                }
+            }
 
             const insertWindowResult = await tx.insert(windowItem).values({
                 windowItemId: crypto.randomUUID(),
@@ -50,6 +62,8 @@ export const windowModel = {
                 uValue: Number(body.uValue),
                 color: body.color,
                 dismantleDate: new Date(body.dismantleDate)?.toISOString(),
+                lon: body.lon,
+                lat: body.lat,
             });
         });
 
