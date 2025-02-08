@@ -13,7 +13,7 @@ const PannelWrapper = () => {
     // User menu dropdown
     const userMenu = (
         <Menu>
-            <Menu.Item key="logout" onClick={() => navigate("/logout")} icon={<LogoutOutlined />}>
+            <Menu.Item key="logout" onClick={() => navigate("/")} icon={<LogoutOutlined />}>
                 Logout
             </Menu.Item>
         </Menu>

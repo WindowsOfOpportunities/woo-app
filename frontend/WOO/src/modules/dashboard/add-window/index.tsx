@@ -19,10 +19,6 @@ const AddWindowForm = () => {
 
   const [api, contextHolder] = notification.useNotification();
   const submitData = async (data: any) => {
-    notification.open({
-      message: "Upload Successful",
-      description: "Your window data has been uploaded successfully.",
-    });
 
     const jsonData = data;
     // Convert JSON to FormData
@@ -78,7 +74,7 @@ const AddWindowForm = () => {
             width: 0,
             yearFrom: 1990,
             yearTo: 2020,
-            glassPane: 0,
+            glassPane: 2,
             coating: 0,
             uValue: 0,
             airResistance: "",
@@ -385,7 +381,11 @@ const AddWindowForm = () => {
             </Col>
           </Row>
 
-          <Form.Item label="Upload Image" name="image">
+          <Form.Item label="Upload Image" name="image" rules={[
+            {
+              required: true
+            },
+          ]}>
             <Upload
               beforeUpload={(file) => false} // Disable auto upload
               accept="image/*"
