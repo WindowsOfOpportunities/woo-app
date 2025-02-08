@@ -19,7 +19,6 @@ const AddWindowForm = () => {
 
   const [api, contextHolder] = notification.useNotification();
   const submitData = async (data: any) => {
-
     const jsonData = data;
     const formData = new FormData();
 
@@ -380,11 +379,15 @@ const AddWindowForm = () => {
             </Col>
           </Row>
 
-          <Form.Item label="Upload Image" name="image" rules={[
-            {
-              required: true
-            },
-          ]}>
+          <Form.Item
+            label="Upload Image"
+            name="image"
+            rules={[
+              {
+                required: false,
+              },
+            ]}
+          >
             <Upload
               beforeUpload={(file) => false} // Disable auto upload
               accept="image/*"
