@@ -22,3 +22,4 @@ export const windowItem = pgTable('profile', {
 });
 
 export type WindowItem = typeof windowItem.$inferSelect;
+
