@@ -69,7 +69,7 @@ export const windowModel = {
                     uValue: window.uValue!,
                 });
             } catch (error) {
-                rating = undefined;
+                rating = null;
             }
 
             return { ...window, windowRating: rating };
