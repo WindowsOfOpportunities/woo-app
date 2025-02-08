@@ -6,7 +6,7 @@
         "dev": "bun run --watch src/index.ts",
         "migrate": "bunx drizzle-kit push",
         "build": "bun install && bun build --target=bun ./src/index.ts --outdir ./dist",
-        "start": "bun src/index.ts"
+        "start": "bun dist/index.js"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.744.0",
