@@ -25,7 +25,6 @@ const AddWindowForm = () => {
     });
 
     const jsonData = data;
-    // Convert JSON to FormData
     const formData = new FormData();
 
     // Flatten & Append data
@@ -297,7 +296,7 @@ const AddWindowForm = () => {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item label="Dismantle Date" name="dismantleDate">
-                <DatePicker style={{ width: "100%" }} />
+                <DatePicker required={true} style={{ width: "100%" }} />
               </Form.Item>
             </Col>
             <Col span={8}>
