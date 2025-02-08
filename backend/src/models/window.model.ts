@@ -1,7 +1,7 @@
 import { PostWindowBodySchemaType } from '../controllers/window.controllers';
 import { db } from '../db/db';
 import { project, windowItem } from '../db/migration';
-import { uploadImageToS3 } from '../storage/s3storage';
+import { getImageFromS3, uploadImageToS3 } from '../storage/s3storage';
 
 export const windowModel = {
     insertWindow: async (body: PostWindowBodySchemaType) => {
@@ -17,7 +17,7 @@ export const windowModel = {
                 streetNumber: body.streetNumber,
             });
 
-            const imageId = crypto.randomUUID()
+            const imageId = crypto.randomUUID();
             const uploadResult = await uploadImageToS3(body.image as any, imageId);
 
             const insertWindowResult = await tx.insert(windowItem).values({
@@ -52,8 +52,14 @@ export const windowModel = {
             });
         });
 
-
-
         return true;
     },
+    getWindows: async () => {
+        const windows = await db.select().from(windowItem);
+        return windows;
+    },
+    getWindowImage: async (imageId:string) => {
+        const image = await getImageFromS3(imageId);
+        return image
+    }
 };

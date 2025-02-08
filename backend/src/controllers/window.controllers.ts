@@ -40,18 +40,29 @@ const postWindowBodySchema = t.Object({
 });
 export type PostWindowBodySchemaType = Static<typeof postWindowBodySchema>;
 
-export const windowController = new Elysia().post(
-    '/window',
-    async ({ params, body, set }) => {
-        const insertResult = await windowModel.insertWindow(body);
+export const windowController = new Elysia()
+    .post(
+        '/window',
+        async ({ params, body, set }) => {
+            const insertResult = await windowModel.insertWindow(body);
 
-        set.status = 200;
-        return {
-            message: 'Successfully added to DB',
-        };
-    },
-    {
-        body: postWindowBodySchema,
-        parse: 'formdata',
-    }
-);
+            set.status = 200;
+            return {
+                message: 'Successfully added to DB',
+            };
+        },
+        {
+            body: postWindowBodySchema,
+            parse: 'formdata',
+        }
+    )
+    .get('/window', async ({}) => {
+        const windows = await windowModel.getWindows();
+
+        return windows;
+    })
+    .get('/window-image/:imageId', async ({ params }) => {
+        const image = await windowModel.getWindowImage(params.imageId);
+
+        return image;
+    });
