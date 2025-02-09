@@ -1,9 +1,9 @@
+import { eq } from 'drizzle-orm';
 import { EnrichedWindowBody } from '../controllers/window.controllers';
 import { db } from '../db/db';
 import { project, windowItem } from '../db/migration';
 import { WindowOpportunitiesCalculator } from '../helpers/rating-algorithm';
 import { getImageFromS3, uploadImageToS3 } from '../storage/s3storage';
-
 
 export const windowModel = {
     insertWindow: async (body: EnrichedWindowBody) => {
@@ -70,23 +70,23 @@ export const windowModel = {
         return true;
     },
     getWindows: async () => {
-        const windows = await db.select().from(windowItem);
+        const windows = await db.select().from(windowItem).leftJoin(project, eq(windowItem.projectId, project.uuid));
 
         return windows.map((window) => {
             const calc = new WindowOpportunitiesCalculator();
             let rating;
             try {
                 rating = calc.calculate({
-                    coatingNumber: window.coating,
-                    glassPanelNumber: window.glassPane,
-                    year: window.windowYearFrom,
-                    uValue: window.uValue!,
+                    coatingNumber: window.windowItem.coating,
+                    glassPanelNumber: window.windowItem.glassPane,
+                    year: window.windowItem.windowYearFrom,
+                    uValue: window.windowItem.uValue!,
                 });
             } catch (error) {
                 rating = null;
             }
 
-            return { ...window, windowRating: rating };
+            return { ...window.windowItem, windowRating: rating, project: window.project };
         });
     },
     getWindowImage: async (imageId: string) => {
