@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 import axios, { AxiosInstance, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios';
 
-const baseServerUrl = 'http://localhost:3009/api/v1';
+const baseServerUrl = import.meta.env.VITE_BACKEND_URL
 
 // Reusable Axios Configuration
 const createAxiosInstance = (baseURL: string): AxiosInstance => {
