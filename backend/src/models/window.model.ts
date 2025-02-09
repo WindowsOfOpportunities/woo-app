@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { EnrichedWindowBody } from '../controllers/window.controllers';
 import { db } from '../db/db';
 import { project, windowItem } from '../db/migration';
@@ -64,13 +64,18 @@ export const windowModel = {
                 dismantleDate: new Date(body.dismantleDate)?.toISOString(),
                 lon: body.lon,
                 lat: body.lat,
+                createDate: new Date().toISOString(),
             });
         });
 
         return true;
     },
     getWindows: async () => {
-        const windows = await db.select().from(windowItem).leftJoin(project, eq(windowItem.projectId, project.uuid));
+        const windows = await db
+            .select()
+            .from(windowItem)
+            .leftJoin(project, eq(windowItem.projectId, project.uuid))
+            .orderBy(desc(windowItem.createDate));
 
         return windows.map((window) => {
             const calc = new WindowOpportunitiesCalculator();
