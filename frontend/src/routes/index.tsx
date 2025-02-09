@@ -1,6 +1,6 @@
 import { Navigate, Outlet, RouterProvider } from "react-router";
 import LoginPage from "../modules/login";
-import { createBrowserRouter } from "react-router";
+import { createMemoryRouter } from "react-router";
 import DashBoard from "../modules/dashboard";
 import AddWindowForm from "../modules/dashboard/add-window";
 import PannelWrapper from "../components/layout/panel-wrapper";
@@ -21,7 +21,7 @@ const LoginGuard = () => {
     return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Outlet />;
 };
 
-const router = createBrowserRouter([
+const router = createMemoryRouter([
     {
         path: '/',
         element: <LoginGuard />, // If logged in, redirect to dashboard
