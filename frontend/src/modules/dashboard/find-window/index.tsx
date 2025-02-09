@@ -5,7 +5,7 @@ import {
     getWindowsList,
 } from "../../../utils/api/api-functions";
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -68,7 +68,7 @@ const FindWindow = () => {
 
     // Handle search input
     const handleSearch = (value: string) => {
-        setSearchText(value);
+        setSearchText(value.toLowerCase());
 
         if (!value) {
             setFilteredData(windowData); // Reset filtered data when search is cleared
@@ -76,8 +76,12 @@ const FindWindow = () => {
         }
 
         const filtered = windowData.filter((item) => {
-            return Object.values(item).some((val) =>
-                val && val.toString().toLowerCase().includes(value.toLowerCase())
+            return (
+                (item.project?.projectName?.toLowerCase() || "").includes(value.toLowerCase()) ||
+                (item.project?.city?.toLowerCase() || "").includes(value.toLowerCase()) ||
+                Object.values(item).some(
+                    (val) => val && val.toString().toLowerCase().includes(value.toLowerCase())
+                )
             );
         });
 
@@ -86,6 +90,18 @@ const FindWindow = () => {
 
     // Columns definition for the table
     const columns = [
+        {
+            title: "Project Name",
+            dataIndex: "projectName",
+            key: "projectName",
+            render: (value: any, record: any) => `${record?.project?.projectName}`,
+        },
+        {
+            title: "City",
+            dataIndex: "city",
+            key: "city",
+            render: (value: any, record: any) => `${record?.project?.city}`,
+        },
         {
             title: "Window Count",
             dataIndex: "windowCount",
@@ -135,6 +151,26 @@ const FindWindow = () => {
             ),
         },
         {
+            title: "Reuse Window Potential",
+            dataIndex: "reuseWindow",
+            key: "reuseWindow",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.reuseWindow?.color}>
+                    {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
+                </Tag>
+            ),
+        },
+        {
+            title: "Reuse Sashes Potential",
+            dataIndex: "reuseSashes",
+            key: "reuseSashes",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.reuseSashes?.color}>
+                    {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
+                </Tag>
+            ),
+        },
+        {
             title: "Dismantle Date",
             dataIndex: "dismantleDate",
             key: "dismantleDate",
@@ -157,12 +193,15 @@ const FindWindow = () => {
 
     // Memoized markers to prevent unnecessary re-renders
     const markers = useMemo(() => {
+
         return filteredData.map((item) => {
             if (!item.lat || !item.lon) return null;
             return (
                 <Marker key={item.projectId} position={[item.lat, item.lon]} icon={customIcon}>
                     <Popup >
                         <Flex vertical >
+                            <span> <strong>Project:</strong> {item?.project?.projectName} </span>
+                            <span> <strong>City:</strong> {item?.project?.city} </span>
                             <span> <strong>Window Count:</strong> {item.windowCount} </span>
                             <span> <strong>Window Width:</strong> {item.windowWidth} </span>
                             <span> <strong>Material Frame:</strong> {item.materialFrame} </span>
@@ -174,6 +213,23 @@ const FindWindow = () => {
             );
         }).filter(Boolean);
     }, [filteredData]);
+
+    const MapBounds = ({ data }: { data: any[] }) => {
+        const map = useMap();
+
+        useEffect(() => {
+            const points = data
+                .filter(item => item.lat && item.lon)
+                .map(item => L.latLng(item.lat, item.lon));
+
+            if (points.length > 0) {
+                const bounds = L.latLngBounds(points);
+                map.fitBounds(bounds);
+            }
+        }, [data, map]);
+
+        return null;
+    };
 
     return (
         <div style={{ padding: "20px" }}>
@@ -216,6 +272,7 @@ const FindWindow = () => {
                             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
                         />
                         {markers}
+                        <MapBounds data={filteredData} />
                     </MapContainer>
                 </div>
             )}
