@@ -12,6 +12,11 @@ export const storageClient = new S3Client({
 });
 
 export const uploadImageToS3 = async (file: File, key: string) => {
+    if (!file) {
+        console.log('No image provided, skipping upload');
+        return null;
+    }
+
     try {
         const image = Buffer.from(await file.arrayBuffer());
         // Set up the parameters for the PutObjectCommand
@@ -35,6 +40,10 @@ export const uploadImageToS3 = async (file: File, key: string) => {
 };
 
 export const getImageFromS3 = async (key: string) => {
+    if (!key) {
+        console.log('No image key provided');
+        return null;
+    }
     try {
         // Create the command and send it to S3
         const command = new GetObjectCommand({

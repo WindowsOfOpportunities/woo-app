@@ -9,4 +9,7 @@ COPY . .
 ENV NODE_ENV production
 
 RUN bun run build
-RUN bun run start
+
+EXPOSE 3009
+
+CMD ["bun","start"]

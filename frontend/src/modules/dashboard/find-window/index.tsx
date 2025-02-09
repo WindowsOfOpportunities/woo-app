@@ -1,6 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { Table, Typography, Input, Space, Modal, Tag } from "antd";
-import { getImageByWindowId, getWindowsList } from "../../../utils/api/api-functions";
+import {
+  getImageByWindowId,
+  getWindowsList,
+} from "../../../utils/api/api-functions";
 
 // Utility function for mapping color values
 const mapColorToWord = (number: number) => {
