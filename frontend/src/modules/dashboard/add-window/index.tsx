@@ -353,26 +353,6 @@ const AddWindowForm = () => {
             </Col>
           </Row>
 
-          <Row gutter={16}>
-            <Col span={8}>
-              <Form.Item
-                label="Longtitude"
-                name="lon"
-              >
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item
-                label="Latitude"
-                name="lat"
-              >
-                <InputNumber min={0} style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-
-          </Row>
-
           <Form.Item
             label="Upload Image"
             name="image"
