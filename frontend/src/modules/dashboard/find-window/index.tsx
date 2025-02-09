@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Table, Typography, Input, Space, Modal, Tag } from "antd";
 import {
-  getImageByWindowId,
-  getWindowsList,
+    getImageByWindowId,
+    getWindowsList,
 } from "../../../utils/api/api-functions";
+import React from "react";
 
 // Utility function for mapping color values
 const mapColorToWord = (number: number) => {
@@ -17,6 +18,7 @@ const mapColorToWord = (number: number) => {
 
 const FindWindow = () => {
     const [windowData, setWindowData] = useState<any[]>([]);
+    const [viewSection, setViewSection] = useState<'Table' | 'Map'>('Table');
     const [filteredData, setFilteredData] = useState<any[]>([]);
     const [searchText, setSearchText] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
