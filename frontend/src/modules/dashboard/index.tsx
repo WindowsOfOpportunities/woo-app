@@ -3,6 +3,7 @@ import { Content } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
 import WindowIconAdd from "../../assets/images/window-add.svg";
 import WindowIconSearch from "../../assets/images/window-search.svg";
+import React from "react";
 const { Title } = Typography;
 
 // Reusable Action Card Component

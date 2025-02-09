@@ -15,10 +15,13 @@ import { createWindow } from "../../../utils/api/api-functions";
 import { useContext } from "react";
 import { AntContext } from "../../../utils/providers/antd";
 import { formInitialValues } from "./config";
+import React from "react";
+import { useNavigate } from "react-router";
 
 const AddWindowForm = () => {
   const [form] = Form.useForm();
   const { notificationApi } = useContext(AntContext)
+  const navigate = useNavigate();
 
   const submitData = async (data: any) => {
     const jsonData = data;
@@ -42,6 +45,7 @@ const AddWindowForm = () => {
       });
 
       console.log("Upload successful:", response.data);
+      navigate('/dashboard/find-window')
     } catch (error) {
       console.error("Upload failed:", error);
       notificationApi.error({

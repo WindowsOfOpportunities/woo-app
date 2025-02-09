@@ -7,6 +7,7 @@ import PannelWrapper from "../components/layout/panel-wrapper";
 import FindWindow from "../modules/dashboard/find-window";
 import NotFoundPage from "../components/pages/not-found";
 import AntdConfigProvider from "../utils/providers/antd";
+import React from "react";
 
 // AuthGuard: Protect routes that require authentication
 const AuthGuard = () => {

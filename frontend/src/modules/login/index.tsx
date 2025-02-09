@@ -1,9 +1,10 @@
 import { Button, Col, Row, Form, Input, Typography } from "antd";
-import Pic from "../../assets/images/01.jpg";
+import Pic from "../../assets/images/window-look.jpg";
 import Logo from "../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AntContext } from "../../utils/providers/antd";
+import React from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const LoginPage = () => {
     const { username, password } = values;
 
     if (username === "admin" && password === "admin") {
-      localStorage.setItem("token", "fake-jwt-token"); // Store a fake token
+      localStorage.setItem("token", "fake-jwt-token");
       navigate("/dashboard");
       notificationApi.success({
         message: "Welcome back!",
@@ -35,8 +36,8 @@ const LoginPage = () => {
 
   return (
     <Row style={{ height: "100vh" }}>
-      {/* Left side - Background Image */}
-      <Col span={12}>
+      {/* Left side - Background Image (Hidden on Small Screens) */}
+      <Col xs={0} sm={0} md={12} lg={12} xl={12}>
         <div
           style={{
             height: "100vh",
@@ -46,8 +47,8 @@ const LoginPage = () => {
         />
       </Col>
 
-      {/* Right side - Login Form */}
-      <Col span={12} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      {/* Right side - Login Form (Full Width on Mobile) */}
+      <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
         <div style={{ width: "100%", maxWidth: "400px", textAlign: "center" }}>
           <img src={Logo} alt="Logo" style={{ width: 150 }} />
           <Typography.Title level={3}>Windows of Opportunities</Typography.Title>
