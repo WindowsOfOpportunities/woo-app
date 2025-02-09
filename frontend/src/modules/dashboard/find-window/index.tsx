@@ -1,10 +1,14 @@
-import { useEffect, useState, useCallback } from "react";
-import { Table, Typography, Input, Space, Modal, Tag } from "antd";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { Table, Typography, Input, Space, Modal, Tag, Flex, Radio } from "antd";
 import {
     getImageByWindowId,
     getWindowsList,
 } from "../../../utils/api/api-functions";
 import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
 
 // Utility function for mapping color values
 const mapColorToWord = (number: number) => {
@@ -15,6 +19,13 @@ const mapColorToWord = (number: number) => {
     };
     return colorMap[number] || '';
 };
+
+// Custom icon for markers
+const customIcon = new L.Icon({
+    iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+});
 
 const FindWindow = () => {
     const [windowData, setWindowData] = useState<any[]>([]);
@@ -124,26 +135,6 @@ const FindWindow = () => {
             ),
         },
         {
-            title: "Reuse Sashes Potential",
-            dataIndex: "reuseSashes",
-            key: "reuseSashes",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.reuseSashes?.color}>
-                    {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
-                </Tag>
-            ),
-        },
-        {
-            title: "Reuse Whole Window Potential",
-            dataIndex: "reuseWindow",
-            key: "reuseWindow",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.reuseWindow?.color}>
-                    {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
-                </Tag>
-            ),
-        },
-        {
             title: "Dismantle Date",
             dataIndex: "dismantleDate",
             key: "dismantleDate",
@@ -164,36 +155,73 @@ const FindWindow = () => {
         },
     ];
 
+    // Memoized markers to prevent unnecessary re-renders
+    const markers = useMemo(() => {
+        return filteredData.map((item) => {
+            if (!item.lat || !item.lon) return null;
+            return (
+                <Marker key={item.projectId} position={[item.lat, item.lon]} icon={customIcon}>
+                    <Popup >
+                        <Flex vertical >
+                            <span> <strong>Window Count:</strong> {item.windowCount} </span>
+                            <span> <strong>Window Width:</strong> {item.windowWidth} </span>
+                            <span> <strong>Material Frame:</strong> {item.materialFrame} </span>
+                            <span> <strong>U Value:</strong> {item.uValue} </span>
+                            <span>    <strong>Dismantle Date:</strong> {item.dismantleDate} </span>
+                        </Flex>
+                    </Popup>
+                </Marker>
+            );
+        }).filter(Boolean);
+    }, [filteredData]);
+
     return (
         <div style={{ padding: "20px" }}>
             <Typography.Title level={3}>Find Windows</Typography.Title>
-            <Space style={{ marginBottom: "20px", width: "100%" }}>
-                <Input
-                    placeholder="Search windows..."
-                    style={{ width: 300 }}
-                    value={searchText}
-                    onChange={(e) => handleSearch(e.target.value)}
-                />
-            </Space>
-            <Table
-                columns={columns}
-                dataSource={filteredData}
-                loading={loading}
-                rowKey="projectId" // Assuming projectId is unique for each row
-                scroll={{ y: "40vh", x: 900 }}
-            />
-            <Modal
-                visible={modalVisible}
-                footer={null}
-                onCancel={() => setModalVisible(false)}
-            >
-                {selectedImage ? (
-                    <div style={{ padding: 20 }}>
-                        <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
-                    </div>
-                ) : (
-                    "No Image Available"
-                )}
+            <Flex style={{ marginBottom: 20 }}>
+                <Radio.Group value={viewSection} onChange={(e) => setViewSection(e.target.value)} buttonStyle="solid">
+                    <Radio.Button value="Table">Table</Radio.Button>
+                    <Radio.Button value="Map">Map</Radio.Button>
+                </Radio.Group>
+            </Flex>
+
+            {viewSection === 'Table' ? (
+                <>
+                    <Space style={{ marginBottom: "20px", width: "100%" }}>
+                        <Input
+                            placeholder="Search windows..."
+                            style={{ width: 300 }}
+                            value={searchText}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                    </Space>
+                    <Table
+                        columns={columns}
+                        dataSource={filteredData}
+                        loading={loading}
+                        rowKey="projectId"
+                        scroll={{ y: "40vh", x: 900 }}
+                    />
+                </>
+            ) : (
+                <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                    <MapContainer
+                        center={[51.505, -0.09]}
+                        zoom={5}
+                        scrollWheelZoom={true}
+                        style={{ height: "100%", width: "100%" }}
+                    >
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+                        />
+                        {markers}
+                    </MapContainer>
+                </div>
+            )}
+
+            <Modal visible={modalVisible} footer={null} onCancel={() => setModalVisible(false)}>
+                {selectedImage ? <img src={selectedImage} alt="Window" style={{ width: "100%" }} /> : "No Image Available"}
             </Modal>
         </div>
     );

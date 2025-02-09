@@ -15,6 +15,7 @@ import { createWindow } from "../../../utils/api/api-functions";
 import { useContext } from "react";
 import { AntContext } from "../../../utils/providers/antd";
 import { formInitialValues } from "./config";
+import React from "react";
 
 const AddWindowForm = () => {
   const [form] = Form.useForm();
@@ -347,6 +348,26 @@ const AddWindowForm = () => {
                 <Input />
               </Form.Item>
             </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item
+                label="Longtitude"
+                name="lon"
+              >
+                <InputNumber style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Latitude"
+                name="lat"
+              >
+                <InputNumber min={0} style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+
           </Row>
 
           <Form.Item
