@@ -37,3 +37,7 @@ bun build
 ### Deployment
 
 TODO
+
+
+### Search Algorithm 
+PlainText_fromMatlabScript. txt is the text file located within Search Algorithm folder that is a plain text explanation of the matlab search algorithm code. The matlab code used for the window algorithm scoring is found under WindowAlgorithmCode.m. The matlab code was further interpreted into nodetypescript and used for the interface calculation.

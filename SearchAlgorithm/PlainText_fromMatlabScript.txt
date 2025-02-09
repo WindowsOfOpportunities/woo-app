@@ -1,0 +1,83 @@
+Windows of Opportunities - MATLAB Script Explanation
+1. Setting Recycling Levels
+The script defines three levels for recycling:
+
+High = 3
+Medium = 2
+Low = 1
+These values will be used later in the recycling and reuse calculations.
+
+2. User Inputs
+The script prompts the user to input the following values:
+
+U_value (Thermal transmittance, representing insulation efficiency)
+Coating_number (Indicates the level of coating on the glass:
+0 = High recycling
+1 = Medium recycling
+2 = Low recycling)
+Glass_panel_number (Number of glass panels in the window)
+Year (Year of window installation or evaluation)
+3. Defining Limits
+The script sets predefined limits:
+
+Year limits:
+1990, 2010, and 2025
+U-value limits:
+0.7, 1.2, 1.8 (used for reuse assessment)
+4. Assigning a Default U-value (if not provided)
+If the user does not enter a U_value, the script calculates it based on the year, number of glass panels, and coating number.
+
+Conditions for Assigning U-value:
+
+For years after 2010 (>2010)
+If Glass_panel_number is 3, U_value = 0.4
+If Glass_panel_number is 2, U_value = 1
+For years between 1990 and 2010 (1990 < Year < 2010)
+If Glass_panel_number is 3, U_value = 0.8
+If Glass_panel_number is 2, U_value = 1.1
+For years before 1990 (<1990)
+If Glass_panel_number is 3, U_value = 1.9
+If Glass_panel_number is 2, U_value = 2.7
+5. Recycling Level Calculation
+The recycling level is determined by the Coating_number:
+
+Coating_number = 0 → High recycling
+Coating_number = 1 → Medium recycling
+Coating_number = 2 → Low recycling
+6. Glass and Sash Reuse Conditions
+The script evaluates whether the glass and sashes (window frames) can be reused based on Glass_panel_number and U_value.
+
+ReuseGlass & ReuseSashes Conditions:
+High reuse if:
+Glass_panel_number = 3 and U_value < 0.7
+Glass_panel_number = 2 and U_value < 1.2
+Medium reuse if:
+Glass_panel_number = 3 and 0.7 < U_value < 1.2
+Glass_panel_number = 2 and 0.7 < U_value < 1.2
+Low reuse if:
+Glass_panel_number = 3 and U_value > 1.2
+Glass_panel_number = 2 and U_value > 1.8
+Since the same conditions are used for both ReuseGlass and ReuseSashes, they will have identical values.
+
+7. Window Reuse Conditions
+The script assesses the reusability of the entire window based on the year and U-value.
+
+ReuseWindow Conditions:
+High reuse if:
+2010 < Year < 2025 and U_value < 0.7
+Medium reuse if:
+2010 < Year < 2025 and 0.7 < U_value < 1.2
+1990 < Year < 2010
+Low reuse if:
+Year < 1990 and 0.7 < U_value < 1.8
+Year < 1990 and U_value > 1.2
+Summary of What the Script Does
+Takes user inputs for U-value, coating level, glass panel count, and year.
+Assigns a U-value if the user didn’t provide one.
+Determines the recycling level based on the coating number.
+Evaluates reuse potential for:
+Glass panels
+Sashes (window frames)
+The entire window
+Classifies reuse into High, Medium, or Low categories.
+This script is essentially a decision-making tool for determining window sustainability based on insulation (U-value), coating level, number of glass panels, and year of installation.
