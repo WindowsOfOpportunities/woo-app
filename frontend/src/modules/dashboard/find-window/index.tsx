@@ -90,104 +90,109 @@ const FindWindow = () => {
 
     // Columns definition for the table
     import { Table, Tag } from "antd";
-    const infocolumns = [
-        {
-            title: "Projekt",
-            dataIndex: "projectName",
-            key: "projectName",
-            render: (value: any, record: any) => `${record?.project?.projectName}`,
-        },
-        {
-            title: "Anzahl",
-            dataIndex: "windowCount",
-            key: "windowCount",
-            render: (value: any) => `${value} Fenster`,
-        },
-        {
-            title: "Masse (B*H)", // Nouveau titre pour représenter les dimensions
-            key: "windowSize",
-            render: (_: any, record: any) => `${record.windowHeight} m * ${record.windowWidth} m`
-        },   
-        {
-            title: "Rahmen",
-            dataIndex: "materialFrame",
-            key: "materialFrame",
-        },
-        {
-            title: "U-Wert",
-            dataIndex: "uValue",
-            key: "uValue",
-            render: (value: any) => `${value} W/m²K`,
-        },
-        {
-            title: "Anhänge",
-            key: "action",
-            render: (record: any) =>
-                record.imageUrl ? (
-                    <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
-                ) : (
-                    "No Image"
-                ),
-        },
-    const ratingcolumns = [
-        {
-            title: "Fenster Reuse Potential",
-            dataIndex: "reuseWindow",
-            key: "reuseWindow",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.reuseWindow?.color}>
-                    {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
-                </Tag>
+
+const infoColumns = [
+    {
+        title: "Projekt",
+        dataIndex: "projectName",
+        key: "projectName",
+        render: (value: any, record: any) => `${record?.project?.projectName}`,
+    },
+    {
+        title: "Anzahl",
+        dataIndex: "windowCount",
+        key: "windowCount",
+        render: (value: any) => `${value} Fenster`,
+    },
+    {
+        title: "Masse (B*H)",
+        key: "windowSize",
+        render: (_: any, record: any) => `${record.windowWidth} m × ${record.windowHeight} m`,
+    },
+    {
+        title: "Rahmen",
+        dataIndex: "materialFrame",
+        key: "materialFrame",
+    },
+    {
+        title: "U-Wert",
+        dataIndex: "uValue",
+        key: "uValue",
+        render: (value: any) => `${value} W/m²K`,
+    },
+    {
+        title: "Anhänge",
+        key: "action",
+        render: (record: any) =>
+            record.imageUrl ? (
+                <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
+            ) : (
+                "No Image"
             ),
-        },
-        {
-            title: "Kastenfenster Potential",
-            dataIndex: "reuseSashes",
-            key: "reuseSashes",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.reuseSashes?.color}>
-                    {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
-                </Tag>
-            ),
-        },
-        {
-            title: "Glas Reuse Potential",
-            dataIndex: "reuseGlass",
-            key: "reuseGlass",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.reuseGlass?.color}>
-                    {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
-                </Tag>
-            ),
-        },
-        {
-            title: "Recycling Potential",
-            dataIndex: "recycling",
-            key: "recycling",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.recycling?.color}>
-                    {mapColorToWord(record?.windowRating?.recycling?.value)}
-                </Tag>
-            ),
-        },
-    ];
-    const MyComponent = ({ data }: { data: any[] }) => {
-        return (
-            <div style={{ display: "flex", gap: "20px" }}>
-                {/* Tableau 1 : Fenster Informationen */}
-                <div style={{ flex: 1 }}>
-                    <h2>Fenster Informationen</h2>
-                    <Table columns={infoColumns} dataSource={data} pagination={false} />
-                </div>
-    
-                {/* Tableau 2 : Fenster Bewertung */}
-                <div style={{ flex: 1 }}>
-                    <h2>Fenster Bewertung</h2>
-                    <Table columns={ratingColumns} dataSource={data} pagination={false} />
-                </div>
+    },
+];
+
+const ratingColumns = [
+    {
+        title: "Fenster Reuse Potential",
+        dataIndex: "reuseWindow",
+        key: "reuseWindow",
+        render: (_: any, record: any) => (
+            <Tag color={record?.windowRating?.reuseWindow?.color}>
+                {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
+            </Tag>
+        ),
+    },
+    {
+        title: "Kastenfenster Potential",
+        dataIndex: "reuseSashes",
+        key: "reuseSashes",
+        render: (_: any, record: any) => (
+            <Tag color={record?.windowRating?.reuseSashes?.color}>
+                {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
+            </Tag>
+        ),
+    },
+    {
+        title: "Glas Reuse Potential",
+        dataIndex: "reuseGlass",
+        key: "reuseGlass",
+        render: (_: any, record: any) => (
+            <Tag color={record?.windowRating?.reuseGlass?.color}>
+                {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
+            </Tag>
+        ),
+    },
+    {
+        title: "Recycling Potential",
+        dataIndex: "recycling",
+        key: "recycling",
+        render: (_: any, record: any) => (
+            <Tag color={record?.windowRating?.recycling?.color}>
+                {mapColorToWord(record?.windowRating?.recycling?.value)}
+            </Tag>
+        ),
+    },
+];
+
+const MyComponent = ({ data }: { data: any[] }) => {
+    return (
+        <div style={{ display: "flex", gap: "20px" }}>
+            {/* Tableau 1 : Fenster Informationen */}
+            <div style={{ flex: 1 }}>
+                <h2>Fenster Informationen</h2>
+                <Table columns={infoColumns} dataSource={data} pagination={false} />
             </div>
-        );
-    };
+
+            {/* Tableau 2 : Fenster Bewertung */}
+            <div style={{ flex: 1 }}>
+                <h2>Fenster Bewertung</h2>
+                <Table columns={ratingColumns} dataSource={data} pagination={false} />
+            </div>
+        </div>
+    );
+};
+
 
     // Memoized markers to prevent unnecessary re-renders
     const markers = useMemo(() => {
