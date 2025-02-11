@@ -121,7 +121,7 @@ const infoColumns = [
 // **Colonnes pour le tableau "Fenster Bewertung"**
 const ratingColumns = [
     {
-        title: "Fenster Reuse Potential",
+        title: <div style={{ paddingLeft: "15px", paddingRight: "15px", textAlign: "center" }}>Fenster Reuse Potential</div>,
         dataIndex: "reuseWindow",
         key: "reuseWindow",
         render: (_: any, record: any) => (
@@ -131,7 +131,7 @@ const ratingColumns = [
         ),
     },
     {
-        title: "Kastenfenster Potential",
+        title: <div style={{ paddingLeft: "15px", paddingRight: "15px", textAlign: "center" }}>Kastenfenster Potential</div>,
         dataIndex: "reuseSashes",
         key: "reuseSashes",
         render: (_: any, record: any) => (
@@ -141,7 +141,7 @@ const ratingColumns = [
         ),
     },
     {
-        title: "Glas Reuse Potential",
+        title: <div style={{ paddingLeft: "15px", paddingRight: "15px", textAlign: "center" }}>Glas Reuse Potential</div>,
         dataIndex: "reuseGlass",
         key: "reuseGlass",
         render: (_: any, record: any) => (
@@ -151,7 +151,7 @@ const ratingColumns = [
         ),
     },
     {
-        title: "Recycling Potential",
+        title: <div style={{ paddingLeft: "15px", paddingRight: "15px", textAlign: "center" }}>Recycling Potential</div>,
         dataIndex: "recycling",
         key: "recycling",
         render: (_: any, record: any) => (
@@ -161,6 +161,8 @@ const ratingColumns = [
         ),
     },
 ];
+
+
 
 return (
     <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
