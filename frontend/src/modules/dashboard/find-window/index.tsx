@@ -81,33 +81,39 @@ const FindWindow = () => {
             title: "Projekt",
             dataIndex: "projectName",
             key: "projectName",
+            width: 200, // Ajustement de la largeur
             render: (value: any, record: any) => record?.project?.projectName,
         },
         {
             title: "Anzahl",
             dataIndex: "windowCount",
             key: "windowCount",
+            width: 120, // Réduction pour équilibrer
             render: (value: any) => `${value} Fenster`,
         },
         {
             title: "Masse (B*H)",
             key: "windowSize",
-            render: (_: any, record: any) => `${record.windowWidth} m × ${record.windowHeight} m`,
+            width: 150,
+            render: (_: any, record: any) => `${record.windowWidth} m * ${record.windowHeight} m`,
         },
         {
             title: "Rahmen",
             dataIndex: "materialFrame",
             key: "materialFrame",
+            width: 120,
         },
         {
             title: "U-Wert",
             dataIndex: "uValue",
             key: "uValue",
+            width: 120,
             render: (value: any) => `${value} W/m²K`,
         },
         {
             title: "Anhänge",
             key: "action",
+            width: 120,
             render: (record: any) =>
                 record.imageUrl ? (
                     <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
@@ -116,10 +122,10 @@ const FindWindow = () => {
                 ),
         },
         {
-            title: <div style={{ textAlign: "center" }}>Fenster Reuse<br />Potential</div>,
+            title: "Fenster ReUse Potential",
             dataIndex: "reuseWindow",
             key: "reuseWindow",
-            width: 90,
+            width: 110, // Ajustement de la largeur pour éviter le texte compressé
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseWindow?.color}>
                     {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
@@ -127,10 +133,10 @@ const FindWindow = () => {
             ),
         },
         {
-            title: <div style={{ textAlign: "center" }}>Kastenfenster<br />Potential</div>,
+            title: "Kastenfenster Potential",
             dataIndex: "reuseSashes",
             key: "reuseSashes",
-            width: 90,
+            width: 110, // Alignement équilibré
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseSashes?.color}>
                     {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
@@ -138,10 +144,10 @@ const FindWindow = () => {
             ),
         },
         {
-            title: <div style={{ textAlign: "center" }}>Glas Reuse<br />Potential</div>,
+            title: "Glas ReUse Potential",
             dataIndex: "reuseGlass",
             key: "reuseGlass",
-            width: 90,
+            width: 110,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseGlass?.color}>
                     {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
@@ -149,10 +155,10 @@ const FindWindow = () => {
             ),
         },
         {
-            title: <div style={{ textAlign: "center" }}>Recycling<br />Potential</div>,
+            title: "Recycling Potential",
             dataIndex: "recycling",
             key: "recycling",
-            width: 90,
+            width: 110,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.recycling?.color}>
                     {mapColorToWord(record?.windowRating?.recycling?.value)}
