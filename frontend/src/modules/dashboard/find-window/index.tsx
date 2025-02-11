@@ -81,7 +81,7 @@ const FindWindow = () => {
             title: "Projekt",
             dataIndex: "projectName",
             key: "projectName",
-            width: 290, // Ajustement de la largeur
+            width: 190, // Ajustement de la largeur
             render: (value: any, record: any) => record?.project?.projectName,
         },
         {
