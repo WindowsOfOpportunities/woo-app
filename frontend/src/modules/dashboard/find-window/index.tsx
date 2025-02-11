@@ -13,9 +13,9 @@ import L from "leaflet";
 // Utility function for mapping color values
 const mapColorToWord = (number: number) => {
     const colorMap: Record<number, string> = {
-        1: 'Low',
-        2: 'Medium',
-        3: 'High',
+        1: 'Gering',
+        2: 'Mittel',
+        3: 'Hoch',
     };
     return colorMap[number] || '';
 };
