@@ -1,16 +1,12 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Table, Typography, Input, Space, Modal, Tag, Flex, Radio } from "antd";
 import {
     getImageByWindowId,
     getWindowsList,
 } from "../../../utils/api/api-functions";
-import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import React from "react";
-import { Table, Tag } from "antd"; 
-
 
 // Utility function for mapping color values
 const mapColorToWord = (number: number) => {
@@ -38,14 +34,13 @@ const FindWindow = () => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    // Fetch windows data on mount
     useEffect(() => {
         const fetchWindowsData = async () => {
             setLoading(true);
             try {
                 const data = await getWindowsList();
                 setWindowData(data);
-                setFilteredData(data); // Initialize filtered data with the full data set
+                setFilteredData(data);
             } catch (error) {
                 console.error("Error fetching windows data:", error);
             } finally {
@@ -56,11 +51,10 @@ const FindWindow = () => {
         fetchWindowsData();
     }, []);
 
-    // Show image modal
     const showImageModal = useCallback(async (imageUrl: string) => {
         try {
             const blob = await getImageByWindowId(imageUrl);
-            const imageUrlObject = URL.createObjectURL(blob); // Convert Blob to object URL
+            const imageUrlObject = URL.createObjectURL(blob);
             setSelectedImage(imageUrlObject);
             setModalVisible(true);
         } catch (error) {
@@ -68,12 +62,11 @@ const FindWindow = () => {
         }
     }, []);
 
-    // Handle search input
     const handleSearch = (value: string) => {
         setSearchText(value.toLowerCase());
 
         if (!value) {
-            setFilteredData(windowData); // Reset filtered data when search is cleared
+            setFilteredData(windowData);
             return;
         }
 
@@ -90,7 +83,7 @@ const FindWindow = () => {
         setFilteredData(filtered);
     };
 
-// Columns definition for the table
+// Columns for first table
 const infoColumns = [
     {
         title: "Projekt",
@@ -132,6 +125,7 @@ const infoColumns = [
     },
 ];
 
+// Columns for second table
 const ratingColumns = [
     {
         title: "Fenster Reuse Potential",
@@ -174,109 +168,58 @@ const ratingColumns = [
         ),
     },
 ];
-const MyComponent = ({ data }: { data: any[] }) => {
-    return (
-        <div style={{ display: "flex", gap: "20px" }}>
-            <div style={{ flex: 1 }}>
-                <h2>Fenster Informationen</h2>
-                <Table columns={infoColumns} dataSource={data} pagination={false} />
-            </div>
-            <div style={{ flex: 1 }}>
-                <h2>Fenster Bewertung</h2>
-                <Table columns={ratingColumns} dataSource={data} pagination={false} />
-            </div>
-        </div>
-    );
-};
 
-export default MyComponent;
+return (
+    <div style={{ padding: "20px" }}>
+        <Typography.Title level={3}>Find Windows</Typography.Title>
+        <Flex style={{ marginBottom: 20 }}>
+            <Radio.Group value={viewSection} onChange={(e) => setViewSection(e.target.value)} buttonStyle="solid">
+                <Radio.Button value="Table">Table</Radio.Button>
+                <Radio.Button value="Map">Map</Radio.Button>
+            </Radio.Group>
+        </Flex>
 
-    // Memoized markers to prevent unnecessary re-renders
-    const markers = useMemo(() => {
+        {viewSection === 'Table' ? (
+            <>
+                <Space style={{ marginBottom: "20px", width: "100%" }}>
+                    <Input
+                        placeholder="Search windows..."
+                        style={{ width: 300 }}
+                        value={searchText}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                </Space>
 
-        return filteredData.map((item) => {
-            if (!item.lat || !item.lon) return null;
-            return (
-                <Marker key={item.projectId} position={[item.lat, item.lon]} icon={customIcon}>
-                    <Popup >
-                        <Flex vertical >
-                            <span> <strong>Project:</strong> {item?.project?.projectName} </span>
-                            <span> <strong>City:</strong> {item?.project?.city} </span>
-                            <span> <strong>Window Count:</strong> {item.windowCount} </span>
-                            <span> <strong>Window Width:</strong> {item.windowWidth} </span>
-                            <span> <strong>Material Frame:</strong> {item.materialFrame} </span>
-                            <span> <strong>U Value:</strong> {item.uValue} </span>
-                            <span>    <strong>Dismantle Date:</strong> {item.dismantleDate} </span>
-                        </Flex>
-                    </Popup>
-                </Marker>
-            );
-        }).filter(Boolean);
-    }, [filteredData]);
-
-    const MapBounds = ({ data }: { data: any[] }) => {
-        const map = useMap();
-
-        useEffect(() => {
-            const points = data
-                .filter(item => item.lat && item.lon)
-                .map(item => L.latLng(item.lat, item.lon));
-
-            if (points.length > 0) {
-                const bounds = L.latLngBounds(points);
-                map.fitBounds(bounds);
-            }
-        }, [data, map]);
-
-        return null;
-    };
-
-    return (
-        <div style={{ padding: "20px" }}>
-            <Typography.Title level={3}>Find Windows</Typography.Title>
-            <Flex style={{ marginBottom: 20 }}>
-                <Radio.Group value={viewSection} onChange={(e) => setViewSection(e.target.value)} buttonStyle="solid">
-                    <Radio.Button value="Table">Table</Radio.Button>
-                    <Radio.Button value="Map">Map</Radio.Button>
-                </Radio.Group>
-            </Flex>
-
-            {viewSection === 'Table' ? (
-                <>
-                    <Space style={{ marginBottom: "20px", width: "100%" }}>
-                        <Input
-                            placeholder="Search windows..."
-                            style={{ width: 300 }}
-                            value={searchText}
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
-                    </Space>
-                    <MyComponent data={filteredData} />
-
-                </>
-            ) : (
-                <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
-                    <MapContainer
-                        center={[51.505, -0.09]}
-                        zoom={5}
-                        scrollWheelZoom={true}
-                        style={{ height: "100%", width: "100%" }}
-                    >
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; ESRI'
-                            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-                        />
-                        {markers}
-                        <MapBounds data={filteredData} />
-                    </MapContainer>
+                {/* Display Two Tables Side by Side */}
+                <div style={{ display: "flex", gap: "20px" }}>
+                    <div style={{ flex: 1 }}>
+                        <h2>Fenster Informationen</h2>
+                        <Table columns={infoColumns} dataSource={filteredData} pagination={false} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <h2>Fenster Bewertung</h2>
+                        <Table columns={ratingColumns} dataSource={filteredData} pagination={false} />
+                    </div>
                 </div>
-            )}
+            </>
+        ) : (
+            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                <MapContainer
+                    center={[51.505, -0.09]}
+                    zoom={5}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                >
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+                </MapContainer>
+            </div>
+        )}
 
-            <Modal visible={modalVisible} footer={null} onCancel={() => setModalVisible(false)}>
-                {selectedImage ? <img src={selectedImage} alt="Window" style={{ width: "100%" }} /> : "No Image Available"}
-            </Modal>
-        </div>
-    );
+        <Modal open={modalVisible} footer={null} onCancel={() => setModalVisible(false)}>
+            {selectedImage ? <img src={selectedImage} alt="Window" style={{ width: "100%" }} /> : "No Image Available"}
+        </Modal>
+    </div>
+);
 };
 
 export default FindWindow;
