@@ -88,8 +88,9 @@ const FindWindow = () => {
         setFilteredData(filtered);
     };
 
-    // Columns definition for the table
-    import { Table, Tag } from "antd";
+// Columns definition for the table
+import React from "react";
+import { Table, Tag } from "antd";  // 🔹 L'import doit être au début    
 
 const infoColumns = [
     {
