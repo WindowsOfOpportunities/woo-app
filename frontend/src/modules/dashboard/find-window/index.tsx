@@ -163,89 +163,90 @@ const ratingColumns = [
 ];
 
 return (
-        <div style={{ padding: "20px" }}>
-            <Typography.Title level={3}>Find Windows</Typography.Title>
-    
-            <Flex style={{ marginBottom: 20 }}>
-                <Radio.Group 
-                    value={viewSection} 
-                    onChange={(e) => setViewSection(e.target.value)} 
-                    buttonStyle="solid"
-                >
-                    <Radio.Button value="Table">Table</Radio.Button>
-                    <Radio.Button value="Map">Map</Radio.Button>
-                </Radio.Group>
-            </Flex>
-    
-            {viewSection === 'Table' ? (
-                <>
-                    <Space style={{ marginBottom: "20px", width: "100%" }}>
-                        <Input
-                            placeholder="Search windows..."
-                            style={{ width: 300 }}
-                            value={searchText}
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
-                    </Space>
-    
-                    {/* Conteneur des tableaux */}
-                    <div style={{ display: "flex", gap: "20px" }}>
-                        {/* Tableau 1 : Fenster Informationen (plus large) */}
-                        <div style={{ flex: 7 }}>
-                            <h2>Fenster Informationen</h2>
-                            <Table 
-                                columns={infoColumns} 
-                                dataSource={filteredData} 
-                                pagination={false} 
-                                scroll={{ y: 400 }} 
-                                tableLayout="fixed"
-                            />
-                        </div>
-    
-                        {/* Tableau 2 : Fenster Bewertung (plus petit) */}
-                        <div style={{ flex: 3 }}>
-                            <h2>Fenster Bewertung</h2>
-                            <Table 
-                                columns={ratingColumns.map(col => ({
-                                    ...col,
-                                    width: 80  // Réduction de la largeur des colonnes
-                                }))} 
-                                dataSource={filteredData} 
-                                pagination={false} 
-                                scroll={{ y: 400 }}  
-                                tableLayout="fixed"
-                            />
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
-                    <MapContainer
-                        center={[51.505, -0.09]}
-                        zoom={5}
-                        scrollWheelZoom={true}
-                        style={{ height: "100%", width: "100%" }}
-                    >
-                        <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
-                    </MapContainer>
-                </div>
-            )}
-    
-            {/* Modal unique pour l'image */}
-            <Modal 
-                open={modalVisible} 
-                footer={null} 
-                onCancel={() => setModalVisible(false)}
+    <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
+        <Typography.Title level={3}>Find Windows</Typography.Title>
+
+        <Flex style={{ marginBottom: 20 }}>
+            <Radio.Group 
+                value={viewSection} 
+                onChange={(e) => setViewSection(e.target.value)} 
+                buttonStyle="solid"
             >
-                {selectedImage ? (
-                    <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
-                ) : (
-                    "No Image Available"
-                )}
-            </Modal>
-        </div>
-    
+                <Radio.Button value="Table">Table</Radio.Button>
+                <Radio.Button value="Map">Map</Radio.Button>
+            </Radio.Group>
+        </Flex>
+
+        {viewSection === 'Table' ? (
+            <>
+                <Space style={{ marginBottom: "20px", width: "100%" }}>
+                    <Input
+                        placeholder="Search windows..."
+                        style={{ width: 300 }}
+                        value={searchText}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                </Space>
+
+                {/* Conteneur principal pour aligner les tableaux */}
+                <div style={{ display: "flex", gap: "20px", flex: 1, overflowX: "hidden", overflowY: "auto" }}>
+                    
+                    {/* Tableau 1 : Fenster Informationen (plus large) */}
+                    <div style={{ flex: 6, minWidth: "60%" }}>
+                        <h2>Fenster Informationen</h2>
+                        <Table 
+                            columns={infoColumns} 
+                            dataSource={filteredData} 
+                            pagination={false} 
+                            scroll={{ y: 500 }}  
+                            tableLayout="fixed"
+                        />
+                    </div>
+
+                    {/* Tableau 2 : Fenster Bewertung (plus petit et ne dépasse plus) */}
+                    <div style={{ flex: 4, minWidth: "35%", maxWidth: "40%" }}>
+                        <h2>Fenster Bewertung</h2>
+                        <Table 
+                            columns={ratingColumns.map(col => ({
+                                ...col,
+                                width: 90  // 🔥 Ajustement des colonnes
+                            }))} 
+                            dataSource={filteredData} 
+                            pagination={false} 
+                            scroll={{ y: 500 }}  
+                            tableLayout="fixed"
+                        />
+                    </div>
+                </div>
+            </>
+        ) : (
+            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                <MapContainer
+                    center={[51.505, -0.09]}
+                    zoom={5}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                >
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+                </MapContainer>
+            </div>
+        )}
+
+        {/* Modal pour l'image */}
+        <Modal 
+            open={modalVisible} 
+            footer={null} 
+            onCancel={() => setModalVisible(false)}
+        >
+            {selectedImage ? (
+                <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
+            ) : (
+                "No Image Available"
+            )}
+        </Modal>
+    </div>
 );
+
 };
 
 export default FindWindow;
