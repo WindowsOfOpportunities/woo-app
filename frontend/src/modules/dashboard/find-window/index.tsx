@@ -163,45 +163,78 @@ const ratingColumns = [
 ];
 
 return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px", height: "70vh" }}>
-        <Space style={{ marginBottom: "20px", width: "100%" }}>
-            <Input
-                placeholder="Search windows..."
-                style={{ width: 300 }}
-                value={searchText}
-                onChange={(e) => handleSearch(e.target.value)}
-            />
-        </Space>
+    <div style={{ padding: "20px" }}>
+        <Typography.Title level={3}>Find Windows</Typography.Title>
 
-        {/* Conteneur avec un scroll global */}
-        <div style={{ display: "flex", gap: "20px", flex: 1, overflowY: "auto" }}>
-            {/* Tableau 1 : Fenster Informationen (55%) */}
-            <div style={{ flex: 5, display: "flex", flexDirection: "column" }}>
-                <h2>Fenster Informationen</h2>
-                <Table 
-                    columns={infoColumns} 
-                    dataSource={filteredData} 
-                    pagination={false} 
-                    scroll={{ y: 400 }}  // 🔥 Synchronisation des hauteurs
-                    tableLayout="fixed"
-                />
-            </div>
+        <Flex style={{ marginBottom: 20 }}>
+            <Radio.Group 
+                value={viewSection} 
+                onChange={(e) => setViewSection(e.target.value)} 
+                buttonStyle="solid"
+            >
+                <Radio.Button value="Table">Table</Radio.Button>
+                <Radio.Button value="Map">Map</Radio.Button>
+            </Radio.Group>
+        </Flex>
 
-            {/* Tableau 2 : Fenster Bewertung (45%) */}
-            <div style={{ flex: 4, display: "flex", flexDirection: "column" }}>
-                <h2>Fenster Bewertung</h2>
-                <Table 
-                    columns={ratingColumns} 
-                    dataSource={filteredData} 
-                    pagination={false} 
-                    scroll={{ y: 400 }}  // 🔥 Synchronisation des hauteurs
-                    tableLayout="fixed"
-                />
+        {viewSection === 'Table' ? (
+            <>
+                <Space style={{ marginBottom: "20px", width: "100%" }}>
+                    <Input
+                        placeholder="Search windows..."
+                        style={{ width: 300 }}
+                        value={searchText}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                </Space>
+
+                {/* Display Two Tables Side by Side */}
+                <div style={{ display: "flex", gap: "20px" }}>
+                    <div style={{ flex: 1 }}>
+                        <h2>Fenster Informationen</h2>
+                        <Table 
+                            columns={infoColumns} 
+                            dataSource={filteredData} 
+                            pagination={false} 
+                        />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <h2>Fenster Bewertung</h2>
+                        <Table 
+                            columns={ratingColumns} 
+                            dataSource={filteredData} 
+                            pagination={false} 
+                        />
+                    </div>
+                </div>
+            </>
+        ) : (
+            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                <MapContainer
+                    center={[51.505, -0.09]}
+                    zoom={5}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                >
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+                </MapContainer>
             </div>
-        </div>
+        )}
+
+        {/* Modal unique pour l'image */}
+        <Modal 
+            open={modalVisible} 
+            footer={null} 
+            onCancel={() => setModalVisible(false)}
+        >
+            {selectedImage ? (
+                <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
+            ) : (
+                "No Image Available"
+            )}
+        </Modal>
     </div>
 );
-
 };
 
 export default FindWindow;
