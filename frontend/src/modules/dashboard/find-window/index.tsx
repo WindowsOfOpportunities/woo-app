@@ -97,9 +97,10 @@ const FindWindow = () => {
             render: (value: any, record: any) => `${record?.project?.projectName}`,
         },
         {
-            title: "Anzahl Fenster",
+            title: "Anzahl",
             dataIndex: "windowCount",
             key: "windowCount",
+            render: (value: any) => `${value} Fenster`,
         },
         {
             title: "Höhe",
@@ -114,7 +115,7 @@ const FindWindow = () => {
             render: (value: any) => `${value} m`,
         },
         {
-            title: "Rahmen Material",
+            title: "Rahmen",
             dataIndex: "materialFrame",
             key: "materialFrame",
         },
@@ -123,26 +124,6 @@ const FindWindow = () => {
             dataIndex: "uValue",
             key: "uValue",
             render: (value: any) => `${value} W/m²K`,
-        },
-        {
-            title: "Recycling Potential",
-            dataIndex: "recycling",
-            key: "recycling",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.recycling?.color}>
-                    {mapColorToWord(record?.windowRating?.recycling?.value)}
-                </Tag>
-            ),
-        },
-        {
-            title: "Glas Reuse Potential",
-            dataIndex: "reuseGlass",
-            key: "reuseGlass",
-            render: (_: any, record: any) => (
-                <Tag color={record?.windowRating?.reuseGlass?.color}>
-                    {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
-                </Tag>
-            ),
         },
         {
             title: "Fenster Reuse Potential",
@@ -161,6 +142,26 @@ const FindWindow = () => {
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseSashes?.color}>
                     {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
+                </Tag>
+            ),
+        },
+        {
+            title: "Glas Reuse Potential",
+            dataIndex: "reuseGlass",
+            key: "reuseGlass",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.reuseGlass?.color}>
+                    {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
+                </Tag>
+            ),
+        },
+        {
+            title: "Recycling Potential",
+            dataIndex: "recycling",
+            key: "recycling",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.recycling?.color}>
+                    {mapColorToWord(record?.windowRating?.recycling?.value)}
                 </Tag>
             ),
         },
