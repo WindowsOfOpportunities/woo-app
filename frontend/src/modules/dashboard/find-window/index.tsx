@@ -6,9 +6,8 @@ import {
 } from "../../../utils/api/api-functions";
 import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
 
-// Utility function for mapping color values
+// Fonction pour mapper les couleurs aux valeurs
 const mapColorToWord = (number: number) => {
     const colorMap: Record<number, string> = {
         1: 'Gering',
@@ -76,26 +75,25 @@ const FindWindow = () => {
         setFilteredData(filtered);
     };
 
-// **Colonnes pour le tableau "Fenster Informationen"**
-Columns definition for the table
+    // **Tableau fusionné avec toutes les colonnes**
     const columns = [
         {
             title: "Projekt",
             dataIndex: "projectName",
             key: "projectName",
-            render: (value: any, record: any) => ${record?.project?.projectName},
+            render: (value: any, record: any) => record?.project?.projectName,
         },
         {
             title: "Anzahl",
             dataIndex: "windowCount",
             key: "windowCount",
-            render: (value: any) => ${value} Fenster,
+            render: (value: any) => `${value} Fenster`,
         },
         {
-            title: "Masse (B*H)", // Nouveau titre pour représenter les dimensions
+            title: "Masse (B*H)",
             key: "windowSize",
-            render: (_: any, record: any) => ${record.windowHeight} m * ${record.windowWidth} m
-        },   
+            render: (_: any, record: any) => `${record.windowWidth} m × ${record.windowHeight} m`,
+        },
         {
             title: "Rahmen",
             dataIndex: "materialFrame",
@@ -105,7 +103,7 @@ Columns definition for the table
             title: "U-Wert",
             dataIndex: "uValue",
             key: "uValue",
-            render: (value: any) => ${value} W/m²K,
+            render: (value: any) => `${value} W/m²K`,
         },
         {
             title: "Anhänge",
@@ -118,9 +116,10 @@ Columns definition for the table
                 ),
         },
         {
-            title: "Fenster Reuse Potential",
+            title: <div style={{ textAlign: "center" }}>Fenster Reuse<br />Potential</div>,
             dataIndex: "reuseWindow",
             key: "reuseWindow",
+            width: 90,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseWindow?.color}>
                     {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
@@ -128,9 +127,10 @@ Columns definition for the table
             ),
         },
         {
-            title: "Kastenfenster Potential",
+            title: <div style={{ textAlign: "center" }}>Kastenfenster<br />Potential</div>,
             dataIndex: "reuseSashes",
             key: "reuseSashes",
+            width: 90,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseSashes?.color}>
                     {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
@@ -138,9 +138,10 @@ Columns definition for the table
             ),
         },
         {
-            title: "Glas Reuse Potential",
+            title: <div style={{ textAlign: "center" }}>Glas Reuse<br />Potential</div>,
             dataIndex: "reuseGlass",
             key: "reuseGlass",
+            width: 90,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseGlass?.color}>
                     {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
@@ -148,9 +149,10 @@ Columns definition for the table
             ),
         },
         {
-            title: "Recycling Potential",
+            title: <div style={{ textAlign: "center" }}>Recycling<br />Potential</div>,
             dataIndex: "recycling",
             key: "recycling",
+            width: 90,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.recycling?.color}>
                     {mapColorToWord(record?.windowRating?.recycling?.value)}
@@ -159,157 +161,60 @@ Columns definition for the table
         },
     ];
 
-return (
-    <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
-        <Typography.Title level={3}>Find Windows</Typography.Title>
+    return (
+        <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
+            <Typography.Title level={3}>Find Windows</Typography.Title>
 
-        <Flex style={{ marginBottom: 20 }}>
-            <Radio.Group 
-                value={viewSection} 
-                onChange={(e) => setViewSection(e.target.value)} 
-                buttonStyle="solid"
-            >
-                <Radio.Button value="Table">Table</Radio.Button>
-                <Radio.Button value="Map">Map</Radio.Button>
-            </Radio.Group>
-        </Flex>
-
-        {viewSection === 'Table' ? (
-            <>
-                <Space style={{ marginBottom: "20px", width: "100%" }}>
-                    <Input
-                        placeholder="Search windows..."
-                        style={{ width: 300 }}
-                        value={searchText}
-                        onChange={(e) => handleSearch(e.target.value)}
-                    />
-                </Space>
-
-                {/* Tableau unique avec toutes les colonnes */}
-                <Table 
-                    columns={mergedColumns} 
-                    dataSource={filteredData} 
-                    pagination={false} 
-                    scroll={{ y: 500 }}  
-                    tableLayout="fixed"
-                />
-            </>
-        ) : (
-            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
-                <MapContainer
-                    center={[51.505, -0.09]}
-                    zoom={5}
-                    scrollWheelZoom={true}
-                    style={{ height: "100%", width: "100%" }}
+            <Flex style={{ marginBottom: 20 }}>
+                <Radio.Group
+                    value={viewSection}
+                    onChange={(e) => setViewSection(e.target.value)}
+                    buttonStyle="solid"
                 >
-                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
-                </MapContainer>
-            </div>
-        )}
+                    <Radio.Button value="Table">Table</Radio.Button>
+                    <Radio.Button value="Map">Map</Radio.Button>
+                </Radio.Group>
+            </Flex>
 
-        {/* Modal pour l'image */}
-        <Modal 
-            open={modalVisible} 
-            footer={null} 
-            onCancel={() => setModalVisible(false)}
-        >
-            {selectedImage ? (
-                <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
-            ) : (
-                "No Image Available"
-            )}
-        </Modal>
-    </div>
-);
+            {viewSection === 'Table' ? (
+                <>
+                    <Space style={{ marginBottom: "20px", width: "100%" }}>
+                        <Input
+                            placeholder="Search windows..."
+                            style={{ width: 300 }}
+                            value={searchText}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                    </Space>
 
-
-
-
-return (
-    <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
-        <Typography.Title level={3}>Find Windows</Typography.Title>
-
-        <Flex style={{ marginBottom: 20 }}>
-            <Radio.Group 
-                value={viewSection} 
-                onChange={(e) => setViewSection(e.target.value)} 
-                buttonStyle="solid"
-            >
-                <Radio.Button value="Table">Table</Radio.Button>
-                <Radio.Button value="Map">Map</Radio.Button>
-            </Radio.Group>
-        </Flex>
-
-        {viewSection === 'Table' ? (
-            <>
-                <Space style={{ marginBottom: "20px", width: "100%" }}>
-                    <Input
-                        placeholder="Search windows..."
-                        style={{ width: 300 }}
-                        value={searchText}
-                        onChange={(e) => handleSearch(e.target.value)}
+                    {/* Tableau fusionné */}
+                    <Table
+                        columns={columns}
+                        dataSource={filteredData}
+                        pagination={false}
+                        scroll={{ y: 500 }}
+                        tableLayout="fixed"
                     />
-                </Space>
-
-                {/* Conteneur principal pour aligner les tableaux */}
-                <div style={{ display: "flex", gap: "20px", flex: 1, overflowX: "hidden", overflowY: "auto" }}>
-                    
-                    {/* Tableau 1 : Fenster Informationen (plus large) */}
-                    <div style={{ flex: 6, minWidth: "60%" }}>
-                        <h2>Fenster Informationen</h2>
-                        <Table 
-                            columns={infoColumns} 
-                            dataSource={filteredData} 
-                            pagination={false} 
-                            scroll={{ y: 500 }}  
-                            tableLayout="fixed"
-                        />
-                    </div>
-
-                    {/* Tableau 2 : Fenster Bewertung (plus petit et ne dépasse plus) */}
-                    <div style={{ flex: 4, minWidth: "35%", maxWidth: "40%" }}>
-                        <h2>Fenster Bewertung</h2>
-                        <Table 
-                            columns={ratingColumns.map(col => ({
-                                ...col,
-                                width: 90  // 🔥 Ajustement des colonnes
-                            }))} 
-                            dataSource={filteredData} 
-                            pagination={false} 
-                            scroll={{ y: 500 }}  
-                            tableLayout="fixed"
-                        />
-                    </div>
+                </>
+            ) : (
+                <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                    <MapContainer
+                        center={[51.505, -0.09]}
+                        zoom={5}
+                        scrollWheelZoom={true}
+                        style={{ height: "100%", width: "100%" }}
+                    >
+                        <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+                    </MapContainer>
                 </div>
-            </>
-        ) : (
-            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
-                <MapContainer
-                    center={[51.505, -0.09]}
-                    zoom={5}
-                    scrollWheelZoom={true}
-                    style={{ height: "100%", width: "100%" }}
-                >
-                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
-                </MapContainer>
-            </div>
-        )}
-
-        {/* Modal pour l'image */}
-        <Modal 
-            open={modalVisible} 
-            footer={null} 
-            onCancel={() => setModalVisible(false)}
-        >
-            {selectedImage ? (
-                <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
-            ) : (
-                "No Image Available"
             )}
-        </Modal>
-    </div>
-);
 
+            {/* Modal pour l'image */}
+            <Modal open={modalVisible} footer={null} onCancel={() => setModalVisible(false)}>
+                {selectedImage ? <img src={selectedImage} alt="Window" style={{ width: "100%" }} /> : "No Image Available"}
+            </Modal>
+        </div>
+    );
 };
 
 export default FindWindow;
