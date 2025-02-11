@@ -108,24 +108,24 @@ const FindWindow = () => {
             key: "windowCount",
         },
         {
-            title: "Window Height",
+            title: "Höhe",
             dataIndex: "windowHeight",
             key: "windowHeight",
             render: (value: any) => `${value} m`,
         },
         {
-            title: "Window Width",
+            title: "Breite",
             dataIndex: "windowWidth",
             key: "windowWidth",
             render: (value: any) => `${value} m`,
         },
         {
-            title: "Material Frame",
+            title: "Rahmen Material",
             dataIndex: "materialFrame",
             key: "materialFrame",
         },
         {
-            title: "U Value",
+            title: "U-Wert",
             dataIndex: "uValue",
             key: "uValue",
             render: (value: any) => `${value} W/m²K`,
@@ -141,7 +141,7 @@ const FindWindow = () => {
             ),
         },
         {
-            title: "Reuse Glass Potential",
+            title: "Glas Reuse Potential",
             dataIndex: "reuseGlass",
             key: "reuseGlass",
             render: (_: any, record: any) => (
@@ -151,7 +151,7 @@ const FindWindow = () => {
             ),
         },
         {
-            title: "Reuse Window Potential",
+            title: "Fenster Reuse Potential",
             dataIndex: "reuseWindow",
             key: "reuseWindow",
             render: (_: any, record: any) => (
@@ -161,7 +161,7 @@ const FindWindow = () => {
             ),
         },
         {
-            title: "Reuse Sashes Potential",
+            title: "Kastenfenster Potential",
             dataIndex: "reuseSashes",
             key: "reuseSashes",
             render: (_: any, record: any) => (
@@ -171,11 +171,11 @@ const FindWindow = () => {
             ),
         },
         {
-            title: "Dismantle Date",
+            title: "Abbruch Datum",
             dataIndex: "dismantleDate",
             key: "dismantleDate",
             render: (value: any) => {
-                const [year, month, day] = value.split("-");
+                const [year, month] = value.split("-");
                 return `${day}-${month}-${year}`;
             },
         },
