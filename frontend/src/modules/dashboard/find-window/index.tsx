@@ -108,18 +108,6 @@ const FindWindow = () => {
             render: (_: any, record: any) => `${record.windowHeight} m * ${record.windowWidth} m`
         },   
         {
-            title: "Höhe",
-            dataIndex: "windowHeight",
-            key: "windowHeight",
-            render: (value: any) => `${value} m`,
-        },
-        {
-            title: "Breite",
-            dataIndex: "windowWidth",
-            key: "windowWidth",
-            render: (value: any) => `${value} m`,
-        },
-        {
             title: "Rahmen",
             dataIndex: "materialFrame",
             key: "materialFrame",
