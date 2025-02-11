@@ -81,7 +81,7 @@ const FindWindow = () => {
             title: "Projekt",
             dataIndex: "projectName",
             key: "projectName",
-            width: 200, // Ajustement de la largeur
+            width: 290, // Ajustement de la largeur
             render: (value: any, record: any) => record?.project?.projectName,
         },
         {
@@ -94,7 +94,7 @@ const FindWindow = () => {
         {
             title: "Masse (B*H)",
             key: "windowSize",
-            width: 150,
+            width: 120,
             render: (_: any, record: any) => `${record.windowWidth} m * ${record.windowHeight} m`,
         },
         {
@@ -125,7 +125,7 @@ const FindWindow = () => {
             title: "Fenster ReUse Potential",
             dataIndex: "reuseWindow",
             key: "reuseWindow",
-            width: 110, // Ajustement de la largeur pour éviter le texte compressé
+            width: 120, // Ajustement de la largeur pour éviter le texte compressé
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseWindow?.color}>
                     {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
@@ -136,7 +136,7 @@ const FindWindow = () => {
             title: "Kastenfenster Potential",
             dataIndex: "reuseSashes",
             key: "reuseSashes",
-            width: 110, // Alignement équilibré
+            width: 120, // Alignement équilibré
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseSashes?.color}>
                     {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
@@ -147,7 +147,7 @@ const FindWindow = () => {
             title: "Glas ReUse Potential",
             dataIndex: "reuseGlass",
             key: "reuseGlass",
-            width: 110,
+            width: 120,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.reuseGlass?.color}>
                     {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
@@ -158,7 +158,7 @@ const FindWindow = () => {
             title: "Recycling Potential",
             dataIndex: "recycling",
             key: "recycling",
-            width: 110,
+            width: 120,
             render: (_: any, record: any) => (
                 <Tag color={record?.windowRating?.recycling?.color}>
                     {mapColorToWord(record?.windowRating?.recycling?.value)}
