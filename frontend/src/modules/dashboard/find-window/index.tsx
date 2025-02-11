@@ -8,6 +8,8 @@ import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import React from "react";
+import { Table, Tag } from "antd"; 
 
 
 // Utility function for mapping color values
@@ -89,9 +91,6 @@ const FindWindow = () => {
     };
 
 // Columns definition for the table
-import React from "react";
-import { Table, Tag } from "antd";  // 🔹 L'import doit être au début    
-
 const infoColumns = [
     {
         title: "Projekt",
