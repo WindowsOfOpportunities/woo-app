@@ -103,7 +103,7 @@ const FindWindow = () => {
             render: (value: any, record: any) => `${record?.project?.city}`,
         },
         {
-            title: "Window Count",
+            title: "Anzahl verfügbare Fenster",
             dataIndex: "windowCount",
             key: "windowCount",
         },
