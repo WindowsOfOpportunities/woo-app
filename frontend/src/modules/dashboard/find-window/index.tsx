@@ -175,7 +175,7 @@ const FindWindow = () => {
             dataIndex: "dismantleDate",
             key: "dismantleDate",
             render: (value: any) => {
-                const [year, month] = value.split("-");
+                const [year, month, day] = value.split("-");
                 return `${day}-${month}-${year}`;
             },
         },
