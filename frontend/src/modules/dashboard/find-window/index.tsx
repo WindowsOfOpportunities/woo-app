@@ -163,7 +163,6 @@ const ratingColumns = [
 ];
 
 return (
-    return (
         <div style={{ padding: "20px" }}>
             <Typography.Title level={3}>Find Windows</Typography.Title>
     
