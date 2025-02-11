@@ -77,7 +77,8 @@ const FindWindow = () => {
     };
 
 // **Colonnes pour le tableau "Fenster Informationen"**
-const infoColumns = [
+const mergedColumns = [
+    // 🏠 Fenêtre Information
     {
         title: "Projekt",
         dataIndex: "projectName",
@@ -116,14 +117,13 @@ const infoColumns = [
                 "No Image"
             ),
     },
-];
 
-// **Colonnes pour le tableau "Fenster Bewertung"**
-const ratingColumns = [
+    // ⭐ Bewertung Section
     {
         title: <div style={{ textAlign: "center" }}>Fenster Reuse<br />Potential</div>,
         dataIndex: "reuseWindow",
         key: "reuseWindow",
+        width: 100,
         render: (_: any, record: any) => (
             <Tag color={record?.windowRating?.reuseWindow?.color}>
                 {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
@@ -134,6 +134,7 @@ const ratingColumns = [
         title: <div style={{ textAlign: "center" }}>Kastenfenster<br />Potential</div>,
         dataIndex: "reuseSashes",
         key: "reuseSashes",
+        width: 100,
         render: (_: any, record: any) => (
             <Tag color={record?.windowRating?.reuseSashes?.color}>
                 {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
@@ -144,6 +145,7 @@ const ratingColumns = [
         title: <div style={{ textAlign: "center" }}>Glas Reuse<br />Potential</div>,
         dataIndex: "reuseGlass",
         key: "reuseGlass",
+        width: 100,
         render: (_: any, record: any) => (
             <Tag color={record?.windowRating?.reuseGlass?.color}>
                 {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
@@ -154,6 +156,7 @@ const ratingColumns = [
         title: <div style={{ textAlign: "center" }}>Recycling<br />Potential</div>,
         dataIndex: "recycling",
         key: "recycling",
+        width: 100,
         render: (_: any, record: any) => (
             <Tag color={record?.windowRating?.recycling?.color}>
                 {mapColorToWord(record?.windowRating?.recycling?.value)}
@@ -161,6 +164,69 @@ const ratingColumns = [
         ),
     },
 ];
+
+return (
+    <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
+        <Typography.Title level={3}>Find Windows</Typography.Title>
+
+        <Flex style={{ marginBottom: 20 }}>
+            <Radio.Group 
+                value={viewSection} 
+                onChange={(e) => setViewSection(e.target.value)} 
+                buttonStyle="solid"
+            >
+                <Radio.Button value="Table">Table</Radio.Button>
+                <Radio.Button value="Map">Map</Radio.Button>
+            </Radio.Group>
+        </Flex>
+
+        {viewSection === 'Table' ? (
+            <>
+                <Space style={{ marginBottom: "20px", width: "100%" }}>
+                    <Input
+                        placeholder="Search windows..."
+                        style={{ width: 300 }}
+                        value={searchText}
+                        onChange={(e) => handleSearch(e.target.value)}
+                    />
+                </Space>
+
+                {/* Tableau unique avec toutes les colonnes */}
+                <Table 
+                    columns={mergedColumns} 
+                    dataSource={filteredData} 
+                    pagination={false} 
+                    scroll={{ y: 500 }}  
+                    tableLayout="fixed"
+                />
+            </>
+        ) : (
+            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                <MapContainer
+                    center={[51.505, -0.09]}
+                    zoom={5}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                >
+                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+                </MapContainer>
+            </div>
+        )}
+
+        {/* Modal pour l'image */}
+        <Modal 
+            open={modalVisible} 
+            footer={null} 
+            onCancel={() => setModalVisible(false)}
+        >
+            {selectedImage ? (
+                <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
+            ) : (
+                "No Image Available"
+            )}
+        </Modal>
+    </div>
+);
 
 
 
