@@ -77,93 +77,87 @@ const FindWindow = () => {
     };
 
 // **Colonnes pour le tableau "Fenster Informationen"**
-const mergedColumns = [
-    // 🏠 Fenêtre Information
-    {
-        title: "Projekt",
-        dataIndex: "projectName",
-        key: "projectName",
-        render: (value: any, record: any) => `${record?.project?.projectName}`,
-    },
-    {
-        title: "Anzahl",
-        dataIndex: "windowCount",
-        key: "windowCount",
-        render: (value: any) => `${value} Fenster`,
-    },
-    {
-        title: "Masse (B*H)",
-        key: "windowSize",
-        render: (_: any, record: any) => `${record.windowWidth} m × ${record.windowHeight} m`,
-    },
-    {
-        title: "Rahmen",
-        dataIndex: "materialFrame",
-        key: "materialFrame",
-    },
-    {
-        title: "U-Wert",
-        dataIndex: "uValue",
-        key: "uValue",
-        render: (value: any) => `${value} W/m²K`,
-    },
-    {
-        title: "Anhänge",
-        key: "action",
-        render: (record: any) =>
-            record.imageUrl ? (
-                <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
-            ) : (
-                "No Image"
+Columns definition for the table
+    const columns = [
+        {
+            title: "Projekt",
+            dataIndex: "projectName",
+            key: "projectName",
+            render: (value: any, record: any) => ${record?.project?.projectName},
+        },
+        {
+            title: "Anzahl",
+            dataIndex: "windowCount",
+            key: "windowCount",
+            render: (value: any) => ${value} Fenster,
+        },
+        {
+            title: "Masse (B*H)", // Nouveau titre pour représenter les dimensions
+            key: "windowSize",
+            render: (_: any, record: any) => ${record.windowHeight} m * ${record.windowWidth} m
+        },   
+        {
+            title: "Rahmen",
+            dataIndex: "materialFrame",
+            key: "materialFrame",
+        },
+        {
+            title: "U-Wert",
+            dataIndex: "uValue",
+            key: "uValue",
+            render: (value: any) => ${value} W/m²K,
+        },
+        {
+            title: "Anhänge",
+            key: "action",
+            render: (record: any) =>
+                record.imageUrl ? (
+                    <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
+                ) : (
+                    "No Image"
+                ),
+        },
+        {
+            title: "Fenster Reuse Potential",
+            dataIndex: "reuseWindow",
+            key: "reuseWindow",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.reuseWindow?.color}>
+                    {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
+                </Tag>
             ),
-    },
-
-    // ⭐ Bewertung Section
-    {
-        title: <div style={{ textAlign: "center" }}>Fenster Reuse<br />Potential</div>,
-        dataIndex: "reuseWindow",
-        key: "reuseWindow",
-        width: 100,
-        render: (_: any, record: any) => (
-            <Tag color={record?.windowRating?.reuseWindow?.color}>
-                {mapColorToWord(record?.windowRating?.reuseWindow?.value)}
-            </Tag>
-        ),
-    },
-    {
-        title: <div style={{ textAlign: "center" }}>Kastenfenster<br />Potential</div>,
-        dataIndex: "reuseSashes",
-        key: "reuseSashes",
-        width: 100,
-        render: (_: any, record: any) => (
-            <Tag color={record?.windowRating?.reuseSashes?.color}>
-                {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
-            </Tag>
-        ),
-    },
-    {
-        title: <div style={{ textAlign: "center" }}>Glas Reuse<br />Potential</div>,
-        dataIndex: "reuseGlass",
-        key: "reuseGlass",
-        width: 100,
-        render: (_: any, record: any) => (
-            <Tag color={record?.windowRating?.reuseGlass?.color}>
-                {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
-            </Tag>
-        ),
-    },
-    {
-        title: <div style={{ textAlign: "center" }}>Recycling<br />Potential</div>,
-        dataIndex: "recycling",
-        key: "recycling",
-        width: 100,
-        render: (_: any, record: any) => (
-            <Tag color={record?.windowRating?.recycling?.color}>
-                {mapColorToWord(record?.windowRating?.recycling?.value)}
-            </Tag>
-        ),
-    },
-];
+        },
+        {
+            title: "Kastenfenster Potential",
+            dataIndex: "reuseSashes",
+            key: "reuseSashes",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.reuseSashes?.color}>
+                    {mapColorToWord(record?.windowRating?.reuseSashes?.value)}
+                </Tag>
+            ),
+        },
+        {
+            title: "Glas Reuse Potential",
+            dataIndex: "reuseGlass",
+            key: "reuseGlass",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.reuseGlass?.color}>
+                    {mapColorToWord(record?.windowRating?.reuseGlass?.value)}
+                </Tag>
+            ),
+        },
+        {
+            title: "Recycling Potential",
+            dataIndex: "recycling",
+            key: "recycling",
+            render: (_: any, record: any) => (
+                <Tag color={record?.windowRating?.recycling?.color}>
+                    {mapColorToWord(record?.windowRating?.recycling?.value)}
+                </Tag>
+            ),
+        },
+    ];
 
 return (
     <div style={{ padding: "20px", height: "80vh", display: "flex", flexDirection: "column" }}>
