@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Table, Typography, Input, Space, Modal, Tag, Flex, Radio } from "antd";
 import {
     getImageByWindowId,
     getWindowsList,
 } from "../../../utils/api/api-functions";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
@@ -17,13 +17,6 @@ const mapColorToWord = (number: number) => {
     };
     return colorMap[number] || '';
 };
-
-// Custom icon for markers
-const customIcon = new L.Icon({
-    iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-});
 
 const FindWindow = () => {
     const [windowData, setWindowData] = useState<any[]>([]);
@@ -83,7 +76,7 @@ const FindWindow = () => {
         setFilteredData(filtered);
     };
 
-// Columns for first table
+// **Colonnes pour le tableau "Fenster Informationen"**
 const infoColumns = [
     {
         title: "Projekt",
@@ -125,7 +118,7 @@ const infoColumns = [
     },
 ];
 
-// Columns for second table
+// **Colonnes pour le tableau "Fenster Bewertung"**
 const ratingColumns = [
     {
         title: "Fenster Reuse Potential",
@@ -190,14 +183,14 @@ return (
                     />
                 </Space>
 
-                {/* Display Two Tables Side by Side */}
-                <div style={{ display: "flex", gap: "20px", height: "60vh" }}>
-                    <div style={{ flex: 6 }}>
-                        <h2 style={{ position: "sticky", top: 0, background: "#fff", zIndex: 10 }}>Wichtige Informationen</h2>
+                {/* Conteneur pour aligner les tableaux */}
+                <div style={{ display: "flex", gap: "20px", height: "60vh", overflow: "hidden" }}>
+                    <div style={{ flex: 6, overflowY: "auto" }}>
+                        <h2>Fenster Informationen</h2>
                         <Table columns={infoColumns} dataSource={filteredData} pagination={false} scroll={{ y: 400 }} tableLayout="fixed" />
                     </div>
-                    <div style={{ flex: 4 }}>
-                        <h2 style={{ position: "sticky", top: 0, background: "#fff", zIndex: 10 }}>Bewertung</h2>
+                    <div style={{ flex: 4, overflowY: "auto" }}>
+                        <h2>Fenster Bewertung</h2>
                         <Table columns={ratingColumns} dataSource={filteredData} pagination={false} scroll={{ y: 400 }} tableLayout="fixed" />
                     </div>
                 </div>
