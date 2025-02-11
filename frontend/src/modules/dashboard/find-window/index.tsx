@@ -163,77 +163,89 @@ const ratingColumns = [
 ];
 
 return (
-    <div style={{ padding: "20px" }}>
-        <Typography.Title level={3}>Find Windows</Typography.Title>
-
-        <Flex style={{ marginBottom: 20 }}>
-            <Radio.Group 
-                value={viewSection} 
-                onChange={(e) => setViewSection(e.target.value)} 
-                buttonStyle="solid"
-            >
-                <Radio.Button value="Table">Table</Radio.Button>
-                <Radio.Button value="Map">Map</Radio.Button>
-            </Radio.Group>
-        </Flex>
-
-        {viewSection === 'Table' ? (
-            <>
-                <Space style={{ marginBottom: "20px", width: "100%" }}>
-                    <Input
-                        placeholder="Search windows..."
-                        style={{ width: 300 }}
-                        value={searchText}
-                        onChange={(e) => handleSearch(e.target.value)}
-                    />
-                </Space>
-
-                {/* Display Two Tables Side by Side */}
-                <div style={{ display: "flex", gap: "20px" }}>
-                    <div style={{ flex: 1 }}>
-                        <h2>Fenster Informationen</h2>
-                        <Table 
-                            columns={infoColumns} 
-                            dataSource={filteredData} 
-                            pagination={false} 
-                        />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h2>Fenster Bewertung</h2>
-                        <Table 
-                            columns={ratingColumns} 
-                            dataSource={filteredData} 
-                            pagination={false} 
-                        />
-                    </div>
-                </div>
-            </>
-        ) : (
-            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
-                <MapContainer
-                    center={[51.505, -0.09]}
-                    zoom={5}
-                    scrollWheelZoom={true}
-                    style={{ height: "100%", width: "100%" }}
+    return (
+        <div style={{ padding: "20px" }}>
+            <Typography.Title level={3}>Find Windows</Typography.Title>
+    
+            <Flex style={{ marginBottom: 20 }}>
+                <Radio.Group 
+                    value={viewSection} 
+                    onChange={(e) => setViewSection(e.target.value)} 
+                    buttonStyle="solid"
                 >
-                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
-                </MapContainer>
-            </div>
-        )}
-
-        {/* Modal unique pour l'image */}
-        <Modal 
-            open={modalVisible} 
-            footer={null} 
-            onCancel={() => setModalVisible(false)}
-        >
-            {selectedImage ? (
-                <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
+                    <Radio.Button value="Table">Table</Radio.Button>
+                    <Radio.Button value="Map">Map</Radio.Button>
+                </Radio.Group>
+            </Flex>
+    
+            {viewSection === 'Table' ? (
+                <>
+                    <Space style={{ marginBottom: "20px", width: "100%" }}>
+                        <Input
+                            placeholder="Search windows..."
+                            style={{ width: 300 }}
+                            value={searchText}
+                            onChange={(e) => handleSearch(e.target.value)}
+                        />
+                    </Space>
+    
+                    {/* Conteneur des tableaux */}
+                    <div style={{ display: "flex", gap: "20px" }}>
+                        {/* Tableau 1 : Fenster Informationen (plus large) */}
+                        <div style={{ flex: 7 }}>
+                            <h2>Fenster Informationen</h2>
+                            <Table 
+                                columns={infoColumns} 
+                                dataSource={filteredData} 
+                                pagination={false} 
+                                scroll={{ y: 400 }} 
+                                tableLayout="fixed"
+                            />
+                        </div>
+    
+                        {/* Tableau 2 : Fenster Bewertung (plus petit) */}
+                        <div style={{ flex: 3 }}>
+                            <h2>Fenster Bewertung</h2>
+                            <Table 
+                                columns={ratingColumns.map(col => ({
+                                    ...col,
+                                    width: 80  // Réduction de la largeur des colonnes
+                                }))} 
+                                dataSource={filteredData} 
+                                pagination={false} 
+                                scroll={{ y: 400 }}  
+                                tableLayout="fixed"
+                            />
+                        </div>
+                    </div>
+                </>
             ) : (
-                "No Image Available"
+                <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
+                    <MapContainer
+                        center={[51.505, -0.09]}
+                        zoom={5}
+                        scrollWheelZoom={true}
+                        style={{ height: "100%", width: "100%" }}
+                    >
+                        <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
+                    </MapContainer>
+                </div>
             )}
-        </Modal>
-    </div>
+    
+            {/* Modal unique pour l'image */}
+            <Modal 
+                open={modalVisible} 
+                footer={null} 
+                onCancel={() => setModalVisible(false)}
+            >
+                {selectedImage ? (
+                    <img src={selectedImage} alt="Window" style={{ width: "100%" }} />
+                ) : (
+                    "No Image Available"
+                )}
+            </Modal>
+        </div>
+    
 );
 };
 
