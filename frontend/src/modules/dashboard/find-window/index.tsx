@@ -163,40 +163,32 @@ const ratingColumns = [
 ];
 
 return (
-    <div style={{ padding: "20px" }}>
-        <Typography.Title level={3}>Find Windows</Typography.Title>
-        <Flex style={{ marginBottom: 20 }}>
-            <Radio.Group value={viewSection} onChange={(e) => setViewSection(e.target.value)} buttonStyle="solid">
-                <Radio.Button value="Table">Table</Radio.Button>
-                <Radio.Button value="Map">Map</Radio.Button>
-            </Radio.Group>
-        </Flex>
-
-        {viewSection === 'Table' ? (
-            <>
-                <Space style={{ marginBottom: "20px", width: "100%" }}>
-                    <Input
-                        placeholder="Search windows..."
-                        style={{ width: 300 }}
-                        value={searchText}
-                        onChange={(e) => handleSearch(e.target.value)}
-                    />
-                </Space>
-
-                {/* Conteneur pour aligner les tableaux */}
-                <div style={{ display: "flex", gap: "20px", height: "60vh", overflow: "hidden" }}>
-                    <div style={{ flex: 6, overflowY: "auto" }}>
-                        <h2>Fenster Informationen</h2>
-                        <Table columns={infoColumns} dataSource={filteredData} pagination={false} scroll={{ y: 400 }} tableLayout="fixed" />
-                    </div>
-                    <div style={{ flex: 4, overflowY: "auto" }}>
-                        <h2>Fenster Bewertung</h2>
-                        <Table columns={ratingColumns} dataSource={filteredData} pagination={false} scroll={{ y: 400 }} tableLayout="fixed" />
-                    </div>
-                </div>
-            </>
-        ) : null}
+    <div style={{ display: "flex", gap: "20px", height: "60vh", overflow: "hidden" }}>
+    {/* Conteneur principal avec un scroll unique */}
+    <div style={{ flex: 10, display: "flex", flexDirection: "column", overflowY: "auto" }}>
+        <h2>Fenster Informationen</h2>
+        <Table 
+            columns={infoColumns} 
+            dataSource={filteredData} 
+            pagination={false} 
+            scroll={{ y: "auto" }}  // 🔥 Utilisation du scroll principal, pas individuel
+            tableLayout="fixed"
+        />
     </div>
+
+    {/* Tableau 2 : Fenster Bewertung légèrement plus grand (45%) */}
+    <div style={{ flex: 5, display: "flex", flexDirection: "column", overflowY: "hidden" }}>
+        <h2>Fenster Bewertung</h2>
+        <Table 
+            columns={ratingColumns} 
+            dataSource={filteredData} 
+            pagination={false} 
+            scroll={{ y: "auto" }}  // 🔥 Utilisation du scroll principal
+            tableLayout="fixed"
+        />
+    </div>
+</div>
+
 );
 };
 
