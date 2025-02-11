@@ -192,7 +192,7 @@ const MyComponent = ({ data }: { data: any[] }) => {
         </div>
     );
 };
-
+export default MyComponent;
 
     // Memoized markers to prevent unnecessary re-renders
     const markers = useMemo(() => {
