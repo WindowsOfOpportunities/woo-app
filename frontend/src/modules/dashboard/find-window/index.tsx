@@ -91,19 +91,13 @@ const FindWindow = () => {
     // Columns definition for the table
     const columns = [
         {
-            title: "Project Name",
+            title: "Projekt",
             dataIndex: "projectName",
             key: "projectName",
             render: (value: any, record: any) => `${record?.project?.projectName}`,
         },
         {
-            title: "City",
-            dataIndex: "city",
-            key: "city",
-            render: (value: any, record: any) => `${record?.project?.city}`,
-        },
-        {
-            title: "Anzahl verfügbare Fenster",
+            title: "Anzahl Fenster",
             dataIndex: "windowCount",
             key: "windowCount",
         },
@@ -171,16 +165,7 @@ const FindWindow = () => {
             ),
         },
         {
-            title: "Abbruch Datum",
-            dataIndex: "dismantleDate",
-            key: "dismantleDate",
-            render: (value: any) => {
-                const [year, month, day] = value.split("-");
-                return `${day}-${month}-${year}`;
-            },
-        },
-        {
-            title: "Actions",
+            title: "Anhänge",
             key: "action",
             render: (record: any) =>
                 record.imageUrl ? (
