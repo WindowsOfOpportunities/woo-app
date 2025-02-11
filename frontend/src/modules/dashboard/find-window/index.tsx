@@ -191,65 +191,18 @@ return (
                 </Space>
 
                 {/* Display Two Tables Side by Side */}
-                <div style={{ display: "flex", gap: "20px", height: "60vh", overflowY: "auto" }}>
-    {/* Tableau 1 : Fenster Informationen (60% de la largeur) */}
-    <div style={{ flex: 6 }}>
-        <h2>Fenster Informationen</h2>
-        <Table 
-            columns={infoColumns} 
-            dataSource={filteredData} 
-            pagination={false} 
-            scroll={{ y: 400 }}  // 🔥 Scroll vertical pour éviter les décalages
-            tableLayout="fixed"  // 🔥 Alignement des colonnes
-        />
-    </div>
-
-    {/* Tableau 2 : Fenster Bewertung (40% de la largeur) */}
-    <div style={{ flex: 4 }}>
-        <h2>Fenster Bewertung</h2>
-        <Table 
-            columns={ratingColumns} 
-            dataSource={filteredData} 
-            pagination={false} 
-            scroll={{ y: 400 }}  // 🔥 Scroll vertical identique pour alignement
-            tableLayout="fixed"  // 🔥 Assure l’alignement ligne par ligne
-        />
-    </div>
-</div>
-
-
-    {/* Tableau 2 : Fenster Bewertung (40% de la largeur) */}
-    <div style={{ flex: 4 }}>
-        <h2>Fenster Bewertung</h2>
-        <Table 
-            columns={ratingColumns} 
-            dataSource={filteredData} 
-            pagination={false} 
-            scroll={{ y: 400 }}  // 🔥 Scroll vertical identique pour alignement
-            tableLayout="fixed"  // 🔥 Assure l’alignement ligne par ligne
-        />
-    </div>
-</div>
-
-</div>
-
+                <div style={{ display: "flex", gap: "20px", height: "60vh" }}>
+                    <div style={{ flex: 6 }}>
+                        <h2 style={{ position: "sticky", top: 0, background: "#fff", zIndex: 10 }}>Wichtige Informationen</h2>
+                        <Table columns={infoColumns} dataSource={filteredData} pagination={false} scroll={{ y: 400 }} tableLayout="fixed" />
+                    </div>
+                    <div style={{ flex: 4 }}>
+                        <h2 style={{ position: "sticky", top: 0, background: "#fff", zIndex: 10 }}>Bewertung</h2>
+                        <Table columns={ratingColumns} dataSource={filteredData} pagination={false} scroll={{ y: 400 }} tableLayout="fixed" />
+                    </div>
+                </div>
             </>
-        ) : (
-            <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
-                <MapContainer
-                    center={[51.505, -0.09]}
-                    zoom={5}
-                    scrollWheelZoom={true}
-                    style={{ height: "100%", width: "100%" }}
-                >
-                    <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" />
-                </MapContainer>
-            </div>
-        )}
-
-        <Modal open={modalVisible} footer={null} onCancel={() => setModalVisible(false)}>
-            {selectedImage ? <img src={selectedImage} alt="Window" style={{ width: "100%" }} /> : "No Image Available"}
-        </Modal>
+        ) : null}
     </div>
 );
 };
