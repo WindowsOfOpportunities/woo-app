@@ -106,6 +106,7 @@ const FindWindow = () => {
             title: "Masse (B*H)", // Nouveau titre pour représenter les dimensions
             key: "windowSize",
             render: (_: any, record: any) => `${record.windowHeight} m * ${record.windowWidth} m`
+        },   
         {
             title: "Höhe",
             dataIndex: "windowHeight",
