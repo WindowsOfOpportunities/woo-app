@@ -191,16 +191,30 @@ return (
                 </Space>
 
                 {/* Display Two Tables Side by Side */}
-                <div style={{ display: "flex", gap: "20px" }}>
-                    <div style={{ flex: 1 }}>
-                        <h2>Fenster Informationen</h2>
-                        <Table columns={infoColumns} dataSource={filteredData} pagination={false} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                        <h2>Fenster Bewertung</h2>
-                        <Table columns={ratingColumns} dataSource={filteredData} pagination={false} />
-                    </div>
-                </div>
+                <div style={{ display: "flex", gap: "20px", height: "60vh", overflowY: "auto" }}>
+    {/* Tableau 1 : Fenster Informationen (2/3 de la largeur) */}
+    <div style={{ flex: 2 }}>
+        <h2>Fenster Informationen</h2>
+        <Table 
+            columns={infoColumns} 
+            dataSource={filteredData} 
+            pagination={false} 
+            scroll={{ y: 400 }}  // 🔥 Ajout du scroll vertical
+        />
+    </div>
+
+    {/* Tableau 2 : Fenster Bewertung (1/3 de la largeur) */}
+    <div style={{ flex: 1 }}>
+        <h2>Fenster Bewertung</h2>
+        <Table 
+            columns={ratingColumns} 
+            dataSource={filteredData} 
+            pagination={false} 
+            scroll={{ y: 400 }}  // 🔥 Ajout du scroll vertical
+        />
+    </div>
+</div>
+
             </>
         ) : (
             <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
