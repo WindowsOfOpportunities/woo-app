@@ -163,33 +163,45 @@ const ratingColumns = [
 ];
 
 return (
-    <div style={{ display: "flex", gap: "20px", height: "60vh", overflow: "hidden" }}>
-    {/* Conteneur principal avec un scroll unique */}
-    <div style={{ flex: 10, display: "flex", flexDirection: "column", overflowY: "auto" }}>
-        <h2>Fenster Informationen</h2>
-        <Table 
-            columns={infoColumns} 
-            dataSource={filteredData} 
-            pagination={false} 
-            scroll={{ y: "auto" }}  // 🔥 Utilisation du scroll principal, pas individuel
-            tableLayout="fixed"
-        />
-    </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px", height: "70vh" }}>
+        <Space style={{ marginBottom: "20px", width: "100%" }}>
+            <Input
+                placeholder="Search windows..."
+                style={{ width: 300 }}
+                value={searchText}
+                onChange={(e) => handleSearch(e.target.value)}
+            />
+        </Space>
 
-    {/* Tableau 2 : Fenster Bewertung légèrement plus grand (45%) */}
-    <div style={{ flex: 5, display: "flex", flexDirection: "column", overflowY: "hidden" }}>
-        <h2>Fenster Bewertung</h2>
-        <Table 
-            columns={ratingColumns} 
-            dataSource={filteredData} 
-            pagination={false} 
-            scroll={{ y: "auto" }}  // 🔥 Utilisation du scroll principal
-            tableLayout="fixed"
-        />
-    </div>
-</div>
+        {/* Conteneur avec un scroll global */}
+        <div style={{ display: "flex", gap: "20px", flex: 1, overflowY: "auto" }}>
+            {/* Tableau 1 : Fenster Informationen (55%) */}
+            <div style={{ flex: 5, display: "flex", flexDirection: "column" }}>
+                <h2>Fenster Informationen</h2>
+                <Table 
+                    columns={infoColumns} 
+                    dataSource={filteredData} 
+                    pagination={false} 
+                    scroll={{ y: 400 }}  // 🔥 Synchronisation des hauteurs
+                    tableLayout="fixed"
+                />
+            </div>
 
+            {/* Tableau 2 : Fenster Bewertung (45%) */}
+            <div style={{ flex: 4, display: "flex", flexDirection: "column" }}>
+                <h2>Fenster Bewertung</h2>
+                <Table 
+                    columns={ratingColumns} 
+                    dataSource={filteredData} 
+                    pagination={false} 
+                    scroll={{ y: 400 }}  // 🔥 Synchronisation des hauteurs
+                    tableLayout="fixed"
+                />
+            </div>
+        </div>
+    </div>
 );
+
 };
 
 export default FindWindow;
