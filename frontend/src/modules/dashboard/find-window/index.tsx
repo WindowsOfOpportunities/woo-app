@@ -89,7 +89,8 @@ const FindWindow = () => {
     };
 
     // Columns definition for the table
-    const columns = [
+    import { Table, Tag } from "antd";
+    const infocolumns = [
         {
             title: "Projekt",
             dataIndex: "projectName",
@@ -118,6 +119,17 @@ const FindWindow = () => {
             key: "uValue",
             render: (value: any) => `${value} W/m²K`,
         },
+        {
+            title: "Anhänge",
+            key: "action",
+            render: (record: any) =>
+                record.imageUrl ? (
+                    <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
+                ) : (
+                    "No Image"
+                ),
+        },
+    const ratingcolumns = [
         {
             title: "Fenster Reuse Potential",
             dataIndex: "reuseWindow",
@@ -158,17 +170,24 @@ const FindWindow = () => {
                 </Tag>
             ),
         },
-        {
-            title: "Anhänge",
-            key: "action",
-            render: (record: any) =>
-                record.imageUrl ? (
-                    <a onClick={() => showImageModal(record.imageUrl)}>View Image</a>
-                ) : (
-                    "No Image"
-                ),
-        },
     ];
+    const MyComponent = ({ data }: { data: any[] }) => {
+        return (
+            <div style={{ display: "flex", gap: "20px" }}>
+                {/* Tableau 1 : Fenster Informationen */}
+                <div style={{ flex: 1 }}>
+                    <h2>Fenster Informationen</h2>
+                    <Table columns={infoColumns} dataSource={data} pagination={false} />
+                </div>
+    
+                {/* Tableau 2 : Fenster Bewertung */}
+                <div style={{ flex: 1 }}>
+                    <h2>Fenster Bewertung</h2>
+                    <Table columns={ratingColumns} dataSource={data} pagination={false} />
+                </div>
+            </div>
+        );
+    };
 
     // Memoized markers to prevent unnecessary re-renders
     const markers = useMemo(() => {
