@@ -174,17 +174,13 @@ const ratingColumns = [
         ),
     },
 ];
-
 const MyComponent = ({ data }: { data: any[] }) => {
     return (
         <div style={{ display: "flex", gap: "20px" }}>
-            {/* Tableau 1 : Fenster Informationen */}
             <div style={{ flex: 1 }}>
                 <h2>Fenster Informationen</h2>
                 <Table columns={infoColumns} dataSource={data} pagination={false} />
             </div>
-
-            {/* Tableau 2 : Fenster Bewertung */}
             <div style={{ flex: 1 }}>
                 <h2>Fenster Bewertung</h2>
                 <Table columns={ratingColumns} dataSource={data} pagination={false} />
@@ -192,6 +188,7 @@ const MyComponent = ({ data }: { data: any[] }) => {
         </div>
     );
 };
+
 export default MyComponent;
 
     // Memoized markers to prevent unnecessary re-renders
@@ -254,13 +251,8 @@ export default MyComponent;
                             onChange={(e) => handleSearch(e.target.value)}
                         />
                     </Space>
-                    <Table
-                        columns={columns}
-                        dataSource={filteredData}
-                        loading={loading}
-                        rowKey="projectId"
-                        scroll={{ y: "40vh", x: 900 }}
-                    />
+                    <MyComponent data={filteredData} />
+
                 </>
             ) : (
                 <div style={{ height: "60vh", borderRadius: 8, overflow: "hidden" }}>
